@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aoyang.operation.finance.mapper.DemoMapper">
+    
+    <resultMap type="Demo" id="DemoResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+    </resultMap>
+
+    <sql id="selectDemoVo">
+        select id, name from t_demo
+    </sql>
+
+    <select id="selectDemoList" parameterType="Demo" resultMap="DemoResult">
+        <include refid="selectDemoVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectDemoById" parameterType="Long" resultMap="DemoResult">
+        <include refid="selectDemoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertDemo" parameterType="Demo" useGeneratedKeys="true" keyProperty="id">
+        insert into t_demo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDemo" parameterType="Demo">
+        update t_demo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDemoById" parameterType="Long">
+        delete from t_demo where id = #{id}
+    </delete>
+
+    <delete id="deleteDemoByIds" parameterType="String">
+        delete from t_demo where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
