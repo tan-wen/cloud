@@ -1,0 +1,13 @@
+# Spring
+spring:
+  cloud:
+    nacos:
+      discovery:
+        namespace: 9eb76324-9bf0-4658-8da8-4f7959c2f5f2
+      config:
+        namespace: 9eb76324-9bf0-4658-8da8-4f7959c2f5f2
+    sentinel:
+      datasource:
+        ds1:
+          nacos:
+            namespace: 9eb76324-9bf0-4658-8da8-4f7959c2f5f2
