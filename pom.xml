@@ -231,6 +231,8 @@
 		<module>ruoyi-api</module>
 		<module>ruoyi-common</module>
         <module>aoyang-modules</module>
+        <module>aoyang-api</module>
+        <module>aoyang-api-demo</module>
     </modules>
     <packaging>pom</packaging>
 

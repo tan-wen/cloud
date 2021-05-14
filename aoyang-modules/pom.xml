@@ -16,7 +16,7 @@
     <description>澳洋业务模块</description>
 
     <modules>
-        <module>operation-finance</module>
+        <module>demo</module>
         <module>exhibition-fair</module>
     </modules>
 
@@ -80,6 +80,11 @@
         <dependency>
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-common-swagger</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
 
     </dependencies>

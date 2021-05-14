@@ -1,4 +1,4 @@
-package com.aoyang.operation.finance;
+package com.aoyang.demo;
 
 import com.ruoyi.common.security.annotation.EnableCustomConfig;
 import com.ruoyi.common.security.annotation.EnableRyFeignClients;
@@ -16,9 +16,9 @@ import org.springframework.cloud.client.SpringCloudApplication;
 @EnableCustomSwagger2
 @EnableRyFeignClients
 @SpringCloudApplication
-public class OperationFinanceApp {
+public class DemoApp {
     public static void main(String[] args) {
-        SpringApplication.run(OperationFinanceApp.class, args);
-        System.out.println("业财融合模块启动成功");
+        SpringApplication.run(DemoApp.class, args);
+        System.out.println("Demo模块启动成功");
     }
 }
