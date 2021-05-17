@@ -232,6 +232,7 @@
 		<module>ruoyi-common</module>
         <module>aoyang-modules</module>
         <module>aoyang-api</module>
+        <module>aoyang-auth</module>
     </modules>
     <packaging>pom</packaging>
 

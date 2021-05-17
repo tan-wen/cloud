@@ -21,4 +21,11 @@ public class ServiceNameConstants
      * 文件服务的serviceid
      */
     public static final String FILE_SERVICE = "ruoyi-file";
+
+    /**
+     * 澳洋认证中心的serviceid
+     */
+    public static final String AOYANG_AUTH = "aoyang-auth";
+
+    public static final String AOYANG_WX_WORK = "wx-work";
 }
