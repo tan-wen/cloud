@@ -1,6 +1,6 @@
 package com.aoyang.auth.controller;
 
-import com.aoyang.auth.service.WxWorkRemoteService;
+import com.aoyang.auth.service.WxWorkUserService;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.security.service.TokenService;
 import com.ruoyi.system.api.model.LoginUser;
@@ -25,12 +25,12 @@ public class TokenController {
     private TokenService tokenService;
 
     @Resource
-    private WxWorkRemoteService wxWorkRemoteService;
+    private WxWorkUserService wxWorkUserService;
 
     // 企业微信登录认证
     @GetMapping("wx/work/token/{agentId}/{code}")
     public R<?> wxWorkLogin(@PathVariable String agentId, @PathVariable String code) {
-        final LoginUser user = wxWorkRemoteService.getUser(agentId, code);
+        final LoginUser user = wxWorkUserService.getUser(agentId, code);
         return R.ok(tokenService.createToken(user));
     }
 

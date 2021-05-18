@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  **/
 
 @FeignClient(value = ServiceNameConstants.AOYANG_WX_WORK)
-public interface WxWorkRemoteService {
+public interface WxWorkUserService {
 
     @GetMapping("/wx/work/user/{agentId}/{code}")
     LoginUser getUser(@PathVariable(value = "agentId") String agentId,
