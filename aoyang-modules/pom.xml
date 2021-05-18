@@ -19,6 +19,7 @@
         <module>demo</module>
         <module>exhibition-fair</module>
         <module>aoyang-wx-work</module>
+        <module>aoyang-bis</module>
     </modules>
 
     <dependencies>

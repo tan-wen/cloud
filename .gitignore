@@ -5,5 +5,4 @@ logs
 target
 .class
 .gradle
-bootstrap-dev.yml
 gradle
