@@ -11,4 +11,6 @@ import com.ruoyi.system.api.model.LoginUser;
 public interface WxWorkUserService {
 
     LoginUser getUser(String agentId, String code);
+
+    LoginUser getMiniAppUser(String agentId, String code);
 }

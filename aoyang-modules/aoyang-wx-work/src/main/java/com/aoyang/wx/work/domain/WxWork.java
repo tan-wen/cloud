@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * @ClassName WxWork
- * @description: TODO
+ * @description: 从yml中读取企业微信及小应用的配置信息
  * @author: went
  * @Date 2021/5/17 1:18 下午
  **/

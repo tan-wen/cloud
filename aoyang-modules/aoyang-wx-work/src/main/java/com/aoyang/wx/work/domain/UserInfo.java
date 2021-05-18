@@ -25,11 +25,7 @@ import lombok.Data;
  * @Date 2021/5/17 4:53 下午
  **/
 @Data
-public class UserInfo {
-
-    private Integer errcode;
-
-    private String errmsg;
+public class UserInfo extends WxR {
 
     @JsonProperty("UserId")
     private String userId;

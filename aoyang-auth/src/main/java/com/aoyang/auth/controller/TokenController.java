@@ -1,14 +1,12 @@
 package com.aoyang.auth.controller;
 
+import com.aoyang.auth.form.WxLogin;
 import com.aoyang.auth.service.WxWorkUserService;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.security.service.TokenService;
 import com.ruoyi.system.api.model.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -28,14 +26,21 @@ public class TokenController {
     private WxWorkUserService wxWorkUserService;
 
     // 企业微信登录认证
-    @GetMapping("wx/work/token/{agentId}/{code}")
-    public R<?> wxWorkLogin(@PathVariable String agentId, @PathVariable String code) {
-        final LoginUser user = wxWorkUserService.getUser(agentId, code);
+    @PostMapping("token/wx/work")
+    public R<?> wxWorkLogin(@RequestBody WxLogin wxLogin) {
+        final LoginUser user = wxWorkUserService.getWorkUser(wxLogin.getAgentId(), wxLogin.getCode());
+        return R.ok(tokenService.createToken(user));
+    }
+
+    // 企业微信小程序登录认证
+    @PostMapping("token/mini/program")
+    public R<?> wxMiniAppLogin(@RequestBody WxLogin wxLogin) {
+        final LoginUser user = wxWorkUserService.getMiniAppUser(wxLogin.getAgentId(), wxLogin.getCode());
         return R.ok(tokenService.createToken(user));
     }
 
     // 微信公众号登录认证
-    @PostMapping("wx/mp/login")
+    @PostMapping("token/wx/mp")
     public R<?> wxMpLogin() {
 
         return R.ok();

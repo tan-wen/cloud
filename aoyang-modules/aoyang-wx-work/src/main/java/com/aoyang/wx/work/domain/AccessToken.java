@@ -15,11 +15,7 @@ import lombok.Data;
  * @Date 2021/5/17 3:56 下午
  **/
 @Data
-public class AccessToken {
-
-    private Integer errcode;
-
-    private String errmsg;
+public class AccessToken extends WxR{
 
     private String access_token;
 

@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface WxWorkUserService {
 
     @GetMapping("/wx/work/user/{agentId}/{code}")
-    LoginUser getUser(@PathVariable(value = "agentId") String agentId,
+    LoginUser getWorkUser(@PathVariable(value = "agentId") String agentId,
                       @PathVariable(value = "code") String code);
+
+    @GetMapping("/wx/miniapp/user/{agentId}/{code}")
+    LoginUser getMiniAppUser(@PathVariable(value = "agentId") String agentId,
+                             @PathVariable(value = "code") String code);
 }

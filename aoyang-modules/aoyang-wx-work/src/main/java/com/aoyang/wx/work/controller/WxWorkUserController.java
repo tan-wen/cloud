@@ -28,4 +28,9 @@ public class WxWorkUserController {
         return wxWorkUserService.getUser(agentId, code);
     }
 
+    @GetMapping("/wx/miniapp/user/{agentId}/{code}")
+    public LoginUser getMiniAppUser(@PathVariable String agentId ,@PathVariable String code) {
+        return wxWorkUserService.getMiniAppUser(agentId, code);
+    }
+
 }

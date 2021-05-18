@@ -1,6 +1,7 @@
 package com.aoyang.wx.work.service;
 
 import com.aoyang.wx.work.domain.AccessToken;
+import com.aoyang.wx.work.domain.MinAppUser;
 import com.aoyang.wx.work.domain.UserInfo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,4 +24,9 @@ public interface WxWorkRemoteService {
     @GetMapping("/user/getuserinfo")
     UserInfo getUserId(@RequestParam(name = "access_token")String accessToken,
                        @RequestParam(name = "code") String code);
+
+    @GetMapping("/miniprogram/jscode2session")
+    MinAppUser getMinAppUserId(@RequestParam(name = "access_token")String accessToken,
+                               @RequestParam(name = "js_code") String code,
+                               @RequestParam(name = "grant_type")String grantType);
 }
