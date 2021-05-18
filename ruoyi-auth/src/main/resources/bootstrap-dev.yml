@@ -3,6 +3,6 @@ spring:
   cloud:
     nacos:
       discovery:
-        namespace: 5c554a41-f8b8-496e-9dc5-79dd85b3fbab
+        namespace: c5d93333-f7ef-46a2-9987-48cdec8eb832
       config:
-        namespace: 5c554a41-f8b8-496e-9dc5-79dd85b3fbab
+        namespace: c5d93333-f7ef-46a2-9987-48cdec8eb832

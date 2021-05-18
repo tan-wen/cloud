@@ -2,3 +2,8 @@
 .idea
 .DS_Store
 logs
+target
+.class
+.gradle
+bootstamp-dev.yml
+gradle

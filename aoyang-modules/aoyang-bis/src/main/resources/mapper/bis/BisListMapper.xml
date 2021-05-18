@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aoyang.bis.mapper.BisListMapper">
+
+    <select id="findCreateList" resultType="com.aoyang.bis.dto.CreatePersonList">
+        select a.submitter as name , a.submitter_id as userId from  bis_list a
+        <if test="name != null and name != ''">
+            where a.submitter like concat('%',#{name},'%')
+        </if>
+         group by a.submitter , a.submitter_id
+    </select>
+
+    <select id="findMyCharge" resultType="com.aoyang.bis.entity.BisList">
+      select a.* from bis_list a left join bis_detail b on a.id = b.pid where 1=1
+        <if test="state != null and state != ''">
+            and a.state = #{state}
+        </if>
+        <if test="chargePersonId != null and chargePersonId != ''">
+            and b.charge_person_id = #{chargePersonId}
+        </if>
+
+        <if test="start != null and start != ''and end != null and end != ''">
+            and a.create_time between #{start} and #{end}
+        </if>
+        <if test="classification != null and classification != ''">
+            and a.classification = #{classification}
+        </if>
+        <if test="secondaryClassification != null and secondaryClassification != ''">
+            and a.secondary_classification = #{secondaryClassification}
+        </if>
+
+        order by a.create_time desc
+
+    </select>
+
+
+    <select id="findAllInfo" resultType="com.aoyang.bis.entity.BisList">
+        select a.* from bis_list a left join bis_detail b on a.id = b.pid where 1=1
+        <if test="state != null and state != ''">
+            and a.state = #{state}
+        </if>
+        <if test="userId != null and userId != ''">
+            and (b.charge_person_id = #{userId} or a.submitter_id= #{userId})
+        </if>
+        <if test="start != null and start != ''and end != null and end != ''">
+            and a.create_time between #{start} and #{end}
+        </if>
+        <if test="classification != null and classification != ''">
+            and a.classification = #{classification}
+        </if>
+        <if test="secondaryClassification != null and secondaryClassification != ''">
+            and a.secondary_classification = #{secondaryClassification}
+        </if>
+
+        order by a.create_time desc
+
+    </select>
+
+
+
+</mapper>
