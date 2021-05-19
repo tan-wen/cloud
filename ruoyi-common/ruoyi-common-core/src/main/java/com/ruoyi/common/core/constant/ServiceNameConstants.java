@@ -27,5 +27,14 @@ public class ServiceNameConstants
      */
     public static final String AOYANG_AUTH = "aoyang-auth";
 
+    /**
+     * 企业微信-澳洋e家的serviceid
+     */
     public static final String AOYANG_WX_WORK = "wx-work";
+
+
+    /**
+     * 微信公众号serviceid
+     */
+    public static final String AOYANG_WX_MP = "wx-mp";
 }

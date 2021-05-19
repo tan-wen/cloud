@@ -20,6 +20,7 @@
         <module>exhibition-fair</module>
         <module>aoyang-wx-work</module>
         <module>aoyang-bis</module>
+        <module>aoyang-wx-mp</module>
     </modules>
 
     <dependencies>

@@ -54,8 +54,7 @@ public class WxWorkUserServiceImpl implements WxWorkUserService {
     public LoginUser getMiniAppUser(String agentId, String code) {
         //获取access_token
         final String accessToken = wxAccessService.getAccessToken(agentId);
-        final MinAppUser minAppUser = wxWorkRemoteService.getMinAppUserId(accessToken, code,
-                "authorization_code");
+        final MinAppUser minAppUser = wxWorkRemoteService.getMinAppUserId(accessToken, code);
         if (minAppUser.getErrcode().equals(0)) {
             LoginUser loginUser = new LoginUser();
             SysUser sysUser = new SysUser();

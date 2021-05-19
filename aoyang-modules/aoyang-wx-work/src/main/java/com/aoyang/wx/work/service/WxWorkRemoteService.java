@@ -25,8 +25,7 @@ public interface WxWorkRemoteService {
     UserInfo getUserId(@RequestParam(name = "access_token")String accessToken,
                        @RequestParam(name = "code") String code);
 
-    @GetMapping("/miniprogram/jscode2session")
+    @GetMapping("/miniprogram/jscode2session?grant_type=authorization_code")
     MinAppUser getMinAppUserId(@RequestParam(name = "access_token")String accessToken,
-                               @RequestParam(name = "js_code") String code,
-                               @RequestParam(name = "grant_type")String grantType);
+                               @RequestParam(name = "js_code") String code);
 }

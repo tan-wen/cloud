@@ -1,4 +1,4 @@
-package com.aoyang.wx.work.domain;
+package com.aoyang.wx.work.config;
 
 import com.ruoyi.common.core.utils.StringUtils;
 import lombok.Data;

@@ -2,7 +2,7 @@ package com.aoyang.wx.work.service.impl;
 
 
 import com.aoyang.wx.work.domain.AccessToken;
-import com.aoyang.wx.work.domain.WxWork;
+import com.aoyang.wx.work.config.WxWork;
 import com.aoyang.wx.work.service.WxAccessService;
 import com.aoyang.wx.work.service.WxWorkRemoteService;
 import com.ruoyi.common.core.exception.BaseException;
@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class WxAccessServiceImpl implements WxAccessService {
 
-    private static final String CACHE_PREFIX = "access-token";
+    private static final String CACHE_PREFIX = "wx-work-access-token";
 
     private static final String CACHE_CONNECTOR = ":";
 
@@ -39,7 +39,7 @@ public class WxAccessServiceImpl implements WxAccessService {
     @Override
     public String getAccessToken(String agentId) {
 
-        //先从Redis中尝试获取 key = access-token:appId:agentId
+        //先从Redis中尝试获取 key = wx-work-access-token:appId:agentId
         String key = CACHE_PREFIX + CACHE_CONNECTOR + wxWork.getAppId() + CACHE_CONNECTOR +  agentId;
         final String cache = redisService.getCacheObject(key);
         if (!StringUtils.isEmpty(cache)) {
