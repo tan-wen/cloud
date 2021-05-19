@@ -233,7 +233,6 @@
         <module>aoyang-modules</module>
         <module>aoyang-api</module>
         <module>aoyang-auth</module>
-        <module>aoyang-bis</module>
     </modules>
     <packaging>pom</packaging>
 
