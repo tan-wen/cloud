@@ -14,6 +14,10 @@
     <packaging>pom</packaging>
     <description>业务模块接口</description>
 
+    <modules>
+        <module>wx-work-api</module>
+    </modules>
+
     <dependencies>
         <dependency>
             <groupId>com.ruoyi</groupId>
