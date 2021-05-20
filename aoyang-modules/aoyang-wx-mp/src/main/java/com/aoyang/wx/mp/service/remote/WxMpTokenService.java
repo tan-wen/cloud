@@ -1,4 +1,4 @@
-package com.aoyang.wx.mp.service;
+package com.aoyang.wx.mp.service.remote;
 
 import com.aoyang.wx.mp.dto.WxAccessToken;
 import com.aoyang.wx.mp.dto.WxOAuth2Token;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author: went
  * @Date 2021/5/19 2:10 下午
  **/
-@FeignClient(value = "wxMpRemoteService", url = "https://api.weixin.qq.com")
-public interface WxMpRemoteService {
+@FeignClient(value = "wxMpTokenService", url = "https://api.weixin.qq.com")
+public interface WxMpTokenService {
 
     /**
      * 获取accessToken

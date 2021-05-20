@@ -3,7 +3,7 @@ package com.aoyang.wx.mp.service.impl;
 import com.aoyang.wx.mp.config.WxMps;
 import com.aoyang.wx.mp.dto.WxOAuth2Token;
 import com.aoyang.wx.mp.service.UserService;
-import com.aoyang.wx.mp.service.WxMpRemoteService;
+import com.aoyang.wx.mp.service.remote.WxMpTokenService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -21,12 +21,12 @@ public class UserServiceImpl implements UserService {
     private WxMps wxMps;
 
     @Resource
-    private WxMpRemoteService wxMpRemoteService;
+    private WxMpTokenService wxMpTokenService;
 
     @Override
     public String getOpenId(String appId, String code) {
 
-        final WxOAuth2Token token = wxMpRemoteService.getOauth2Token(appId, wxMps.getSecretByAppId(appId), code);
+        final WxOAuth2Token token = wxMpTokenService.getOauth2Token(appId, wxMps.getSecretByAppId(appId), code);
 
         if (token.getOpenid() != null) {
             return token.getOpenid();

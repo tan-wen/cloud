@@ -2,9 +2,8 @@ package com.aoyang.wx.mp.service.impl;
 
 import com.aoyang.wx.mp.config.WxMps;
 import com.aoyang.wx.mp.dto.WxAccessToken;
-import com.aoyang.wx.mp.dto.WxOAuth2Token;
 import com.aoyang.wx.mp.service.AccessTokenService;
-import com.aoyang.wx.mp.service.WxMpRemoteService;
+import com.aoyang.wx.mp.service.remote.WxMpTokenService;
 import com.ruoyi.common.core.exception.BaseException;
 import com.ruoyi.common.core.utils.StringUtils;
 import com.ruoyi.common.redis.service.RedisService;
@@ -26,12 +25,10 @@ public class AccessTokenServiceImpl implements AccessTokenService {
 
     private static final String CACHE_PREFIX = "wx-mp-access-token";
 
-    private static final String OAUTH2_CACHE_PREFIX = "wx-mp-oauth-token";
-
     private static final String CACHE_CONNECTOR = ":";
 
     @Resource
-    private WxMpRemoteService wxMpRemoteService;
+    private WxMpTokenService wxMpTokenService;
 
     @Resource
     private RedisService redisService;
@@ -50,7 +47,7 @@ public class AccessTokenServiceImpl implements AccessTokenService {
         }
 
         //2、 远程获取并存入缓存
-        final WxAccessToken token = wxMpRemoteService.getToken(appId, wxMps.getSecretByAppId(appId));
+        final WxAccessToken token = wxMpTokenService.getToken(appId, wxMps.getSecretByAppId(appId));
         final String access_token = token.getAccess_token();
         if (access_token != null) {
             redisService.setCacheObject(key, access_token, token.getExpires_in(), TimeUnit.SECONDS);

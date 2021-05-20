@@ -16,6 +16,7 @@
 
     <modules>
         <module>wx-work-api</module>
+        <module>wx-mp-api</module>
     </modules>
 
     <dependencies>
