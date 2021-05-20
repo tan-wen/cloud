@@ -1,18 +1,17 @@
 package com.aoyang.wx.work.controller;
 
+import com.aoyang.wx.work.config.Constant;
 import com.aoyang.wx.work.domain.WxRInfo;
-import com.aoyang.wx.work.model.qymsgInfo.appletsinfo.AppletsInfo;
-import com.aoyang.wx.work.model.qymsgInfo.interactivetaskcardinfo.InteractiveTaskcardInfo;
-import com.aoyang.wx.work.model.qymsgInfo.markdowninfo.MarkDown;
-import com.aoyang.wx.work.model.qymsgInfo.markdowninfo.MarkDownInfo;
-import com.aoyang.wx.work.model.qymsgInfo.newsinfo.NewsInfo;
-import com.aoyang.wx.work.model.qymsgInfo.textcard.TextCard;
-import com.aoyang.wx.work.model.qymsgInfo.fileinfo.FileInfo;
-import com.aoyang.wx.work.model.qymsgInfo.imageinfo.ImageInfo;
-import com.aoyang.wx.work.model.qymsgInfo.textcard.TextCardInfo;
-import com.aoyang.wx.work.model.qymsgInfo.textinfo.TextInfo;
-import com.aoyang.wx.work.model.qymsgInfo.videoinfo.VideoInfo;
-import com.aoyang.wx.work.model.qymsgInfo.voiceinfo.VoiceInfo;
+import com.aoyang.wx.work.model.info.applets.AppletsInfo;
+import com.aoyang.wx.work.model.info.interactivetask.InteractiveTaskcardInfo;
+import com.aoyang.wx.work.model.info.markdown.MarkDownInfo;
+import com.aoyang.wx.work.model.info.news.NewsInfo;
+import com.aoyang.wx.work.model.info.file.FileInfo;
+import com.aoyang.wx.work.model.info.image.ImageInfo;
+import com.aoyang.wx.work.model.info.textcard.TextCardInfo;
+import com.aoyang.wx.work.model.info.text.TextInfo;
+import com.aoyang.wx.work.model.info.video.VideoInfo;
+import com.aoyang.wx.work.model.info.voice.VoiceInfo;
 import com.aoyang.wx.work.service.WxAccessService;
 import com.aoyang.wx.work.service.WxMessageService;
 import com.ruoyi.common.core.domain.R;
@@ -33,9 +32,6 @@ import javax.annotation.Resource;
 @Slf4j
 public class WxMessageController {
 
-    private final String TIME_OUT_CODE = "40001";
-
-    private final String reinfo="已调用";
 
     @Resource
     private WxMessageService messageService;
@@ -53,110 +49,110 @@ public class WxMessageController {
     public R<?> sendMessage(@PathVariable String agentId, @RequestBody AppletsInfo data){
         String accessToken = wxAccessService.getAccessToken(agentId);
         WxRInfo wxRInfo = send(accessToken, data);
-        if (TIME_OUT_CODE.equals(wxRInfo.getErrcode())){
+        if (Constant.TIME_OUT_CODE.equals(wxRInfo.getErrcode())){
             String s = wxAccessService.refreshAccessToken(agentId);
-            return R.ok(send(s, data),reinfo);
+            return R.ok(send(s, data),Constant.REINFO);
         }
-        return R.ok(wxRInfo,reinfo);
+        return R.ok(wxRInfo,Constant.REINFO);
     }
 
     @PostMapping("/text/{agentId}")
     public R<?> sendMessage(@PathVariable String agentId, @RequestBody TextInfo data){
         String accessToken = wxAccessService.getAccessToken(agentId);
         WxRInfo wxRInfo = send(accessToken, data);
-        if (TIME_OUT_CODE.equals(wxRInfo.getErrcode())){
+        if (Constant.TIME_OUT_CODE.equals(wxRInfo.getErrcode())){
             String s = wxAccessService.refreshAccessToken(agentId);
-            return R.ok(send(s, data),reinfo);
+            return R.ok(send(s, data),Constant.REINFO);
         }
-        return R.ok(wxRInfo,reinfo);
+        return R.ok(wxRInfo,Constant.REINFO);
     }
 
     @PostMapping("/image/{agentId}")
     public R<?> sendMessage(@PathVariable String agentId, @RequestBody ImageInfo data){
         String accessToken = wxAccessService.getAccessToken(agentId);
         WxRInfo wxRInfo = send(accessToken, data);
-        if (TIME_OUT_CODE.equals(wxRInfo.getErrcode())){
+        if (Constant.TIME_OUT_CODE.equals(wxRInfo.getErrcode())){
             String s = wxAccessService.refreshAccessToken(agentId);
-            return R.ok(send(s, data),reinfo);
+            return R.ok(send(s, data),Constant.REINFO);
         }
-        return R.ok(wxRInfo,reinfo);
+        return R.ok(wxRInfo,Constant.REINFO);
     }
 
     @PostMapping("/voice/{agentId}")
     public R<?> sendMessage(@PathVariable String agentId, @RequestBody VoiceInfo data){
         String accessToken = wxAccessService.getAccessToken(agentId);
         WxRInfo wxRInfo = send(accessToken, data);
-        if (TIME_OUT_CODE.equals(wxRInfo.getErrcode())){
+        if (Constant.TIME_OUT_CODE.equals(wxRInfo.getErrcode())){
             String s = wxAccessService.refreshAccessToken(agentId);
-            return R.ok(send(s, data),reinfo);
+            return R.ok(send(s, data),Constant.REINFO);
         }
-        return R.ok(wxRInfo,reinfo);
+        return R.ok(wxRInfo,Constant.REINFO);
     }
 
     @PostMapping("/video/{agentId}")
     public R<?> sendMessage(@PathVariable String agentId, @RequestBody VideoInfo data){
         String accessToken = wxAccessService.getAccessToken(agentId);
         WxRInfo wxRInfo = send(accessToken, data);
-        if (TIME_OUT_CODE.equals(wxRInfo.getErrcode())){
+        if (Constant.TIME_OUT_CODE.equals(wxRInfo.getErrcode())){
             String s = wxAccessService.refreshAccessToken(agentId);
-            return R.ok(send(s, data),reinfo);
+            return R.ok(send(s, data),Constant.REINFO);
         }
-        return R.ok(wxRInfo,reinfo);
+        return R.ok(wxRInfo,Constant.REINFO);
     }
 
     @PostMapping("/file/{agentId}")
     public R<?> sendMessage(@PathVariable String agentId, @RequestBody FileInfo data){
         String accessToken = wxAccessService.getAccessToken(agentId);
         WxRInfo wxRInfo = send(accessToken, data);
-        if (TIME_OUT_CODE.equals(wxRInfo.getErrcode())){
+        if (Constant.TIME_OUT_CODE.equals(wxRInfo.getErrcode())){
             String s = wxAccessService.refreshAccessToken(agentId);
-            return R.ok(send(s, data),reinfo);
+            return R.ok(send(s, data),Constant.REINFO);
         }
-        return R.ok(wxRInfo,reinfo);
+        return R.ok(wxRInfo,Constant.REINFO);
     }
 
     @PostMapping("/textcard/{agentId}")
     public R<?> sendMessage(@PathVariable String agentId, @RequestBody TextCardInfo data){
         String accessToken = wxAccessService.getAccessToken(agentId);
         WxRInfo wxRInfo = send(accessToken, data);
-        if (TIME_OUT_CODE.equals(wxRInfo.getErrcode())){
+        if (Constant.TIME_OUT_CODE.equals(wxRInfo.getErrcode())){
             String s = wxAccessService.refreshAccessToken(agentId);
-            return R.ok(send(s, data),reinfo);
+            return R.ok(send(s, data),Constant.REINFO);
         }
-        return R.ok(wxRInfo,reinfo);
+        return R.ok(wxRInfo,Constant.REINFO);
     }
 
     @PostMapping("/news/{agentId}")
     public R<?> sendMessage(@PathVariable String agentId, @RequestBody NewsInfo data){
         String accessToken = wxAccessService.getAccessToken(agentId);
         WxRInfo wxRInfo = send(accessToken, data);
-        if (TIME_OUT_CODE.equals(wxRInfo.getErrcode())){
+        if (Constant.TIME_OUT_CODE.equals(wxRInfo.getErrcode())){
             String s = wxAccessService.refreshAccessToken(agentId);
-            return R.ok(send(s, data),reinfo);
+            return R.ok(send(s, data),Constant.REINFO);
         }
-        return R.ok(wxRInfo,reinfo);
+        return R.ok(wxRInfo,Constant.REINFO);
     }
 
     @PostMapping("/markdown/{agentId}")
     public R<?> sendMessage(@PathVariable String agentId, @RequestBody MarkDownInfo data){
         String accessToken = wxAccessService.getAccessToken(agentId);
         WxRInfo wxRInfo = send(accessToken, data);
-        if (TIME_OUT_CODE.equals(wxRInfo.getErrcode())){
+        if (Constant.TIME_OUT_CODE.equals(wxRInfo.getErrcode())){
             String s = wxAccessService.refreshAccessToken(agentId);
-            return R.ok(send(s, data),reinfo);
+            return R.ok(send(s, data),Constant.REINFO);
         }
-        return R.ok(wxRInfo,reinfo);
+        return R.ok(wxRInfo,Constant.REINFO);
     }
 
     @PostMapping("/interactivetaskcard/{agentId}")
     public R<?> sendMessage(@PathVariable String agentId, @RequestBody InteractiveTaskcardInfo data){
-        String accessToken = wxAccessService.getAccessToken(agentId);
+        String accessToken =  wxAccessService.getAccessToken(agentId);
         WxRInfo wxRInfo = send(accessToken, data);
-        if (TIME_OUT_CODE.equals(wxRInfo.getErrcode())){
+        if (Constant.TIME_OUT_CODE.equals(wxRInfo.getErrcode())){
             String s = wxAccessService.refreshAccessToken(agentId);
-            return R.ok(send(s, data),reinfo);
+            return R.ok(send(s, data),Constant.REINFO);
         }
-        return R.ok(wxRInfo,reinfo);
+        return R.ok(wxRInfo,Constant.REINFO);
     }
 
     private WxRInfo send(String accessToken, AppletsInfo data){
@@ -198,4 +194,6 @@ public class WxMessageController {
     private WxRInfo send(String accessToken, InteractiveTaskcardInfo data){
         return messageService.sendMessage(accessToken, data);
     }
+
+
 }

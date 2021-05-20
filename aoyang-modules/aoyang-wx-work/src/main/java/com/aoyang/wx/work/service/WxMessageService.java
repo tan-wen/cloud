@@ -1,16 +1,16 @@
 package com.aoyang.wx.work.service;
 
 import com.aoyang.wx.work.domain.WxRInfo;
-import com.aoyang.wx.work.model.qymsgInfo.appletsinfo.AppletsInfo;
-import com.aoyang.wx.work.model.qymsgInfo.interactivetaskcardinfo.InteractiveTaskcardInfo;
-import com.aoyang.wx.work.model.qymsgInfo.markdowninfo.MarkDownInfo;
-import com.aoyang.wx.work.model.qymsgInfo.newsinfo.NewsInfo;
-import com.aoyang.wx.work.model.qymsgInfo.fileinfo.FileInfo;
-import com.aoyang.wx.work.model.qymsgInfo.imageinfo.ImageInfo;
-import com.aoyang.wx.work.model.qymsgInfo.textcard.TextCardInfo;
-import com.aoyang.wx.work.model.qymsgInfo.textinfo.TextInfo;
-import com.aoyang.wx.work.model.qymsgInfo.videoinfo.VideoInfo;
-import com.aoyang.wx.work.model.qymsgInfo.voiceinfo.VoiceInfo;
+import com.aoyang.wx.work.model.info.applets.AppletsInfo;
+import com.aoyang.wx.work.model.info.interactivetask.InteractiveTaskcardInfo;
+import com.aoyang.wx.work.model.info.markdown.MarkDownInfo;
+import com.aoyang.wx.work.model.info.news.NewsInfo;
+import com.aoyang.wx.work.model.info.file.FileInfo;
+import com.aoyang.wx.work.model.info.image.ImageInfo;
+import com.aoyang.wx.work.model.info.textcard.TextCardInfo;
+import com.aoyang.wx.work.model.info.text.TextInfo;
+import com.aoyang.wx.work.model.info.video.VideoInfo;
+import com.aoyang.wx.work.model.info.voice.VoiceInfo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
