@@ -24,7 +24,7 @@ public class WxMps {
     private List<WxMp> mps;
 
     @Data
-    public static class WxMp {
+    private static class WxMp {
 
         private String appId;
 

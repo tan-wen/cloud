@@ -1,5 +1,6 @@
 package com.aoyang.wx.mp.dto;
 
+import com.aoyang.wx.mp.config.Constants;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -16,4 +17,8 @@ public class WxR implements Serializable {
     private Integer errcode;
 
     private String errmsg;
+
+    public boolean isSuccess () {
+        return Constants.SUCCESS_CODE.equals(errcode);
+    }
 }

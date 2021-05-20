@@ -11,5 +11,11 @@
 
     <artifactId>aoyang-wx-mp</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>wx-mp-api</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+    </dependencies>
 </project>
