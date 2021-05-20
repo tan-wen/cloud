@@ -1,10 +1,14 @@
 package com.aoyang.wx.work.service.impl;
 
+import com.aoyang.wx.work.config.Constant;
 import com.aoyang.wx.work.domain.MinAppUser;
+import com.aoyang.wx.work.domain.UserDetail;
 import com.aoyang.wx.work.domain.UserInfo;
-import com.aoyang.wx.work.service.WxAccessService;
-import com.aoyang.wx.work.service.WxWorkRemoteService;
-import com.aoyang.wx.work.service.WxWorkUserService;
+import com.aoyang.wx.work.model.FlagEnum;
+import com.aoyang.wx.work.model.WxWorkRe;
+import com.aoyang.wx.work.service.AccessService;
+import com.aoyang.wx.work.service.UserService;
+import com.aoyang.wx.work.service.remote.WxWorkService;
 import com.ruoyi.common.core.exception.BaseException;
 import com.ruoyi.system.api.domain.SysUser;
 import com.ruoyi.system.api.model.LoginUser;
@@ -21,13 +25,13 @@ import javax.annotation.Resource;
  **/
 @Service
 @Slf4j
-public class WxWorkUserServiceImpl implements WxWorkUserService {
+public class UserServiceImpl implements UserService {
 
     @Resource
-    private WxAccessService wxAccessService;
+    private AccessService wxAccessService;
 
     @Resource
-    private WxWorkRemoteService wxWorkRemoteService;
+    private WxWorkService wxWorkRemoteService;
 
     @Override
     public LoginUser getUser(String agentId, String code) {
@@ -66,4 +70,27 @@ public class WxWorkUserServiceImpl implements WxWorkUserService {
         log.error("未正确获取用户信息，{}", minAppUser.getErrmsg());
         throw new BaseException("未正确获取用户信息," + minAppUser.getErrmsg());
     }
+
+    @Override
+    public WxWorkRe getuserDetail(String agentId, String userId) {
+        UserDetail userDetail = null;
+        String accessToken = wxAccessService.getAccessToken(agentId);
+        userDetail = wxWorkRemoteService.getUserDetail(accessToken, userId);
+        if (Constant.TIME_OUT_CODE.equals(userDetail.getErrcode().toString())) {
+            String s = wxAccessService.refreshAccessToken(agentId);
+            userDetail = wxWorkRemoteService.getUserDetail(s, userId);
+        }
+        WxWorkRe msgRe = new WxWorkRe();
+        if (Constant.SUCCESS_CODE.equals(userDetail.getErrcode().toString())) {
+            msgRe.flag = FlagEnum.SUCCESS.getCode();
+        } else {
+            msgRe.flag = FlagEnum.FAIL.getCode();
+        }
+        msgRe.code = userDetail.getErrcode();
+        msgRe.info = userDetail.getErrmsg();
+        msgRe.data = userDetail;
+        return msgRe;
+    }
+
+
 }

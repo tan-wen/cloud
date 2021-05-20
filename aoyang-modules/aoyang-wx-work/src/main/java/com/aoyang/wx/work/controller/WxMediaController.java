@@ -1,10 +1,7 @@
 package com.aoyang.wx.work.controller;
 
-import com.aoyang.wx.work.config.Constant;
-import com.aoyang.wx.work.domain.WxMediaInfo;
-import com.aoyang.wx.work.service.WxAccessService;
-import com.aoyang.wx.work.service.WxMediaService;
-import com.ruoyi.common.core.domain.R;
+import com.aoyang.wx.work.model.WxWorkRe;
+import com.aoyang.wx.work.service.MediaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,27 +23,13 @@ import javax.annotation.Resource;
 @Slf4j
 public class WxMediaController {
 
+    @Resource
+    private MediaService mediaService;
 
-    @Resource
-    private WxMediaService wxMediaService;
-    @Resource
-    private WxAccessService wxAccessService;
 
     @PostMapping("/upload/{agentId}/{type}")
-    public R<?> upload(@PathVariable String agentId,@PathVariable String type, MultipartFile filename){
-        String accessToken = wxAccessService.getAccessToken(agentId);
-        WxMediaInfo wxMediaInfo = uploadData(accessToken,type,filename);
-        if (Constant.TIME_OUT_CODE.equals(wxMediaInfo.getErrcode())){
-            String s = wxAccessService.refreshAccessToken(agentId);
-            return R.ok(uploadData(s,type,filename),Constant.REINFO);
-        }
-        return R.ok(wxMediaInfo,Constant.REINFO);
+    public WxWorkRe upload(@PathVariable String agentId, @PathVariable String type, MultipartFile filename) {
+        return mediaService.upload(agentId, type, filename);
     }
-
-    private WxMediaInfo uploadData(String accessToken,String type,MultipartFile filename){
-        return wxMediaService.upload(accessToken,type, filename);
-    }
-
-
 
 }

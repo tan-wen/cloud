@@ -1,7 +1,7 @@
 package com.aoyang.bis.service.impl;
 
 import com.aoyang.bis.common.Result;
-import com.aoyang.bis.entity.BisDetail;
+import com.aoyang.bis.domain.BisDetail;
 import com.aoyang.bis.mapper.BisDetailMapper;
 import com.aoyang.bis.service.BisDetailService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;

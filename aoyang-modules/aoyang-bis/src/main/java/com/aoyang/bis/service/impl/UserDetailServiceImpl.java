@@ -1,6 +1,6 @@
 package com.aoyang.bis.service.impl;
 
-import com.aoyang.bis.entity.UserDetail;
+import com.aoyang.bis.domain.UserDetail;
 import com.aoyang.bis.mapper.UserDetailMapper;
 import com.aoyang.bis.service.UserDetailService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserDetailServiceImpl extends ServiceImpl<UserDetailMapper, UserDetail> implements UserDetailService {
-
 
     @Override
     public UserDetail findByUserId(String userid) {

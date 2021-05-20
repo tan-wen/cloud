@@ -2,8 +2,9 @@ package com.aoyang.bis.service;
 
 
 import com.aoyang.bis.common.Result;
-import com.aoyang.bis.entity.Dictionaries;
+import com.aoyang.bis.domain.Dictionaries;
 import com.baomidou.mybatisplus.extension.service.IService;
+
 
 /**
  * <p>

@@ -11,13 +11,13 @@ import java.util.List;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    @Autowired
-    private CurrentUserResolver currentUserResolver;
-
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(currentUserResolver);
-    }
+//    @Autowired
+//    private CurrentUserResolver currentUserResolver;
+//
+//    @Override
+//    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+//        resolvers.add(currentUserResolver);
+//    }
 
 
 }

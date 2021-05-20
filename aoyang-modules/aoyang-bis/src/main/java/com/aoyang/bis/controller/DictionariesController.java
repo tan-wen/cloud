@@ -1,8 +1,7 @@
 package com.aoyang.bis.controller;
 
-
 import com.aoyang.bis.common.Result;
-import com.aoyang.bis.entity.Dictionaries;
+import com.aoyang.bis.domain.Dictionaries;
 import com.aoyang.bis.service.DictionariesService;
 import org.springframework.web.bind.annotation.*;
 

@@ -2,9 +2,7 @@ package com.aoyang.bis.service;
 
 
 import com.aoyang.bis.common.Result;
-import com.aoyang.bis.dto.CurrentUserInfo;
-import com.aoyang.bis.entity.CurrentUser;
-import com.aoyang.bis.entity.Files;
+import com.aoyang.bis.domain.Files;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,5 +19,5 @@ import java.io.IOException;
  */
 public interface FilesService extends IService<Files> {
 
-    Result<?> addFile(HttpServletRequest request, MultipartFile file, CurrentUserInfo userInfo) throws IOException;
+    Result<?> addFile(HttpServletRequest request, MultipartFile file) throws IOException;
 }

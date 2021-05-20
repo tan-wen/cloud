@@ -6,7 +6,7 @@ package com.aoyang.wx.work.service;
  * @author: went
  * @Date 2021/5/17 10:09 上午
  **/
-public interface WxAccessService {
+public interface AccessService {
 
     String getAccessToken(String agentId);
 

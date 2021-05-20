@@ -1,10 +1,7 @@
 package com.aoyang.bis.controller;
 
-
 import com.aoyang.bis.common.Result;
-import com.aoyang.bis.dto.CurrentUserInfo;
-import com.aoyang.bis.entity.BisReport;
-import com.aoyang.bis.entity.CurrentUser;
+import com.aoyang.bis.domain.BisReport;
 import com.aoyang.bis.service.BisReportService;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,8 +29,8 @@ public class BisReportController {
     }
 
     @PostMapping
-    public Result<?> addReport(@RequestBody BisReport bisReport, @CurrentUser CurrentUserInfo currentUserInfo){
-        return bisReportService.addinfo(bisReport,currentUserInfo);
+    public Result<?> addReport(@RequestBody BisReport bisReport){
+        return bisReportService.addinfo(bisReport);
     }
 
 }

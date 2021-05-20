@@ -1,6 +1,7 @@
 package com.aoyang.bis.mapper;
 
-import com.aoyang.bis.entity.BisReport;
+
+import com.aoyang.bis.domain.BisReport;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

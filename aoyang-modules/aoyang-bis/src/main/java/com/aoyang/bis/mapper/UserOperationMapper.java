@@ -1,6 +1,7 @@
 package com.aoyang.bis.mapper;
 
-import com.aoyang.bis.entity.UserOperation;
+
+import com.aoyang.bis.domain.UserOperation;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

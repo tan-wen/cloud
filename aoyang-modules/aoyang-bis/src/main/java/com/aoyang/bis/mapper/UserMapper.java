@@ -1,7 +1,7 @@
 package com.aoyang.bis.mapper;
 
+import com.aoyang.bis.domain.User;
 import com.aoyang.bis.dto.UsersDto;
-import com.aoyang.bis.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 import java.util.List;

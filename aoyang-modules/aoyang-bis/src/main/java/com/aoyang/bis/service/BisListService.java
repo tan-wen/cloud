@@ -1,10 +1,10 @@
 package com.aoyang.bis.service;
 
 import com.aoyang.bis.common.Result;
+import com.aoyang.bis.domain.BisList;
 import com.aoyang.bis.dto.BisListAddDto;
 import com.aoyang.bis.dto.CreatePersonList;
 import com.aoyang.bis.dto.CurrentUserInfo;
-import com.aoyang.bis.entity.BisList;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.text.ParseException;
@@ -26,23 +26,23 @@ public interface BisListService extends IService<BisList> {
 
     Result<?> updateInfo(String id);
 
-    Result<?> supportOrNot(String id, String type, CurrentUserInfo currentUserInfo);
+    Result<?> supportOrNot(String id, String type);
 
-    Result<?> addBis(BisListAddDto bisListAddDto, CurrentUserInfo currentUserInfo);
+    Result<?> addBis(BisListAddDto bisListAddDto);
 
-    Result<?> findMyList(String state, LocalDateTime createTime, String classification, String type, String secondaryClassification, CurrentUserInfo currentUserInfo) throws ParseException;
+    Result<?> findMyList(String state, LocalDateTime createTime, String classification, String type, String secondaryClassification) throws ParseException;
 
-    Result<?> claimBis(String id,CurrentUserInfo currentUserInfo);
+    Result<?> claimBis(String id);
 
-    Result<?> startBis(String id, CurrentUserInfo currentUserInfo);
+    Result<?> startBis(String id);
 
-    Result<?> finishBis(String id, CurrentUserInfo currentUserInfo);
+    Result<?> finishBis(String id);
 
-    Result<?> cancelBis(String id, CurrentUserInfo currentUserInfo);
+    Result<?> cancelBis(String id);
 
-    Result<?> backBis(String id, CurrentUserInfo currentUserInfo);
+    Result<?> backBis(String id);
 
-    Result<?> assginBis(String id, CreatePersonList pseron, CurrentUserInfo currentUserInfo);
+    Result<?> assginBis(String id, CreatePersonList pseron);
 
-    Result<?> acceptBis(String id, CurrentUserInfo currentUserInfo);
+    Result<?> acceptBis(String id);
 }

@@ -1,4 +1,4 @@
-package com.aoyang.wx.work.service;
+package com.aoyang.wx.work.service.remote;
 
 import com.aoyang.wx.work.domain.WxMediaInfo;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -17,9 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
  * 普通文件（file）：20MB
  */
 @FeignClient(value = "WxMediaService", url = "https://qyapi.weixin.qq.com/cgi-bin/media")
-public interface WxMediaService {
+public interface WxWorkMediaService {
 
-    @PostMapping(path = "/upload",consumes= {MediaType.MULTIPART_FORM_DATA_VALUE})
-    WxMediaInfo upload(@RequestParam(name="access_token") String access_token, @RequestParam(name="type") String type, @RequestPart("filename") MultipartFile filename);
+    @PostMapping(path = "/upload", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    WxMediaInfo upload(@RequestParam(name = "access_token") String access_token, @RequestParam(name = "type") String type, @RequestPart("filename") MultipartFile filename);
 
 }

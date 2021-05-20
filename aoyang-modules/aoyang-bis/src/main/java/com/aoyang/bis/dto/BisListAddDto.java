@@ -2,8 +2,6 @@ package com.aoyang.bis.dto;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 /**
  * @ClassName : BisListDto
  * @Description : 用于新建一个Bis

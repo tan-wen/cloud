@@ -1,13 +1,11 @@
 package com.aoyang.bis.service.impl;
 
-
-import com.aoyang.bis.entity.UserOperation;
+import com.aoyang.bis.domain.UserOperation;
 import com.aoyang.bis.mapper.UserOperationMapper;
 import com.aoyang.bis.service.UserOperationService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
 
 /**

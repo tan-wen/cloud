@@ -1,7 +1,7 @@
 package com.aoyang.bis.service.impl;
 
 import com.aoyang.bis.common.Result;
-import com.aoyang.bis.entity.Dictionaries;
+import com.aoyang.bis.domain.Dictionaries;
 import com.aoyang.bis.mapper.DictionariesMapper;
 import com.aoyang.bis.service.DictionariesService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -9,9 +9,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
-import java.util.Map;
+
 
 /**
  * @ClassName : DictionariesServiceImpl

@@ -1,5 +1,6 @@
 package com.aoyang.wx.work.service;
 
+import com.aoyang.wx.work.model.WxWorkRe;
 import com.ruoyi.system.api.model.LoginUser;
 
 /**
@@ -8,9 +9,12 @@ import com.ruoyi.system.api.model.LoginUser;
  * @author: went
  * @Date 2021/5/17 11:16 上午
  **/
-public interface WxWorkUserService {
+public interface UserService {
 
     LoginUser getUser(String agentId, String code);
 
     LoginUser getMiniAppUser(String agentId, String code);
+
+    WxWorkRe getuserDetail(String agentId, String userId);
+
 }

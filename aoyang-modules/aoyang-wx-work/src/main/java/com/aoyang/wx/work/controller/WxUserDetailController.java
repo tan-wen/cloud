@@ -1,16 +1,12 @@
 package com.aoyang.wx.work.controller;
 
-import com.aoyang.wx.work.config.Constant;
-import com.aoyang.wx.work.domain.UserDetail;
-import com.aoyang.wx.work.domain.WxMediaInfo;
-import com.aoyang.wx.work.domain.WxRInfo;
-import com.aoyang.wx.work.service.WxAccessService;
-import com.aoyang.wx.work.service.WxWorkRemoteService;
-import com.ruoyi.common.core.domain.R;
-import com.ruoyi.system.api.model.LoginUser;
+import com.aoyang.wx.work.model.WxWorkRe;
+import com.aoyang.wx.work.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
@@ -26,24 +22,12 @@ import javax.annotation.Resource;
 public class WxUserDetailController {
 
     @Resource
-    private WxAccessService wxAccessService;
+    private UserService userService;
 
-    @Resource
-    private WxWorkRemoteService wxWorkRemoteService;
 
     @GetMapping("/{agentId}/{userId}")
-    public R<?> getUserDetail(@PathVariable String agentId, @PathVariable String userId) {
-        String accessToken = wxAccessService.getAccessToken(agentId);
-        UserDetail userDetail = findUserDetail(accessToken, userId);
-        if (Constant.TIME_OUT_CODE.equals(userDetail.getErrcode())){
-            String s = wxAccessService.refreshAccessToken(agentId);
-            return R.ok(findUserDetail(s, userId),Constant.REINFO);
-        }
-        return R.ok(userDetail,Constant.REINFO);
-    }
-
-    private UserDetail findUserDetail(String accessToken, String userId){
-        return wxWorkRemoteService.getUserDetail(accessToken,userId);
+    public WxWorkRe getUserDetail(@PathVariable String agentId, @PathVariable String userId) {
+        return userService.getuserDetail(agentId, userId);
     }
 
 }

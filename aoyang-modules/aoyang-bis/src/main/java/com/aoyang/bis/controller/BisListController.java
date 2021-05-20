@@ -2,16 +2,13 @@ package com.aoyang.bis.controller;
 
 
 import com.aoyang.bis.common.Result;
+import com.aoyang.bis.domain.BisList;
+import com.aoyang.bis.domain.StatusEnum;
 import com.aoyang.bis.dto.BisListAddDto;
 import com.aoyang.bis.dto.CreatePersonList;
 import com.aoyang.bis.dto.CurrentUserInfo;
-import com.aoyang.bis.entity.BisList;
-import com.aoyang.bis.entity.CurrentUser;
-import com.aoyang.bis.entity.StatusEnum;
 import com.aoyang.bis.service.BisListService;
 import org.springframework.web.bind.annotation.*;
-
-import javax.websocket.server.PathParam;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 
@@ -50,21 +47,18 @@ public class BisListController {
     public Result<?> findMyCommitList(@RequestParam(required = false) String state,
                                 @RequestParam(required = false) LocalDateTime createTime,
                                 @RequestParam(required = false) String classification,
-                                @RequestParam(required = false) String secondaryClassification,
-                                @CurrentUser CurrentUserInfo currentUserInfo
+                                @RequestParam(required = false) String secondaryClassification
     ) throws ParseException {
-        return bisListService.findMyList(state, createTime, classification,"1", secondaryClassification,currentUserInfo);
+        return bisListService.findMyList(state, createTime, classification,"1", secondaryClassification);
     }
 
     @GetMapping("/mylist/commit")
     public Result<?> findMyChargeList(@RequestParam(required = false) String state,
                                 @RequestParam(required = false) LocalDateTime createTime,
                                 @RequestParam(required = false) String classification,
-                                @RequestParam(required = false) String secondaryClassification,
-
-                                @CurrentUser CurrentUserInfo currentUserInfo
+                                @RequestParam(required = false) String secondaryClassification
     ) throws ParseException {
-        return bisListService.findMyList(state, createTime, classification,"0", secondaryClassification,currentUserInfo);
+        return bisListService.findMyList(state, createTime, classification,"0", secondaryClassification);
     }
 
     /**
@@ -108,75 +102,74 @@ public class BisListController {
      * 顶和踩
      */
     @PutMapping("/support")
-    public Result<?> supportOrNot(@RequestParam String id, @RequestParam String type, @CurrentUser CurrentUserInfo currentUserInfo) {
-        return bisListService.supportOrNot(id, type, currentUserInfo);
+    public Result<?> supportOrNot(@RequestParam String id, @RequestParam String type) {
+        return bisListService.supportOrNot(id, type);
     }
 
     /**
      * 添加Bis
      * @param bisListAddDto
-     * @param currentUserInfo
      * @return
      */
     @PostMapping("/addone")
-    public Result<?> addOne(@RequestBody BisListAddDto bisListAddDto, @CurrentUser CurrentUserInfo currentUserInfo) {
-        return bisListService.addBis(bisListAddDto, currentUserInfo);
+    public Result<?> addOne(@RequestBody BisListAddDto bisListAddDto) {
+        return bisListService.addBis(bisListAddDto);
     }
 
     /**
      * 认领Bis
      */
     @PutMapping("/claim/{id}")
-    public Result<?> claimBis(@PathVariable String id, @CurrentUser CurrentUserInfo currentUserInfo){
-        return bisListService.claimBis(id,currentUserInfo);
+    public Result<?> claimBis(@PathVariable String id){
+        return bisListService.claimBis(id);
     }
 
     /**
      * 开始Bis
      */
     @PutMapping("/start/{id}")
-    public Result<?> startBis(@PathVariable String id, @CurrentUser CurrentUserInfo currentUserInfo){
-        return bisListService.startBis(id,currentUserInfo);
+    public Result<?> startBis(@PathVariable String id){
+        return bisListService.startBis(id);
     }
 
     /**
      * 完成Bis
      */
     @PutMapping("/finish/{id}")
-    public Result<?> finishBis(@PathVariable String id, @CurrentUser CurrentUserInfo currentUserInfo){
-        return bisListService.finishBis(id,currentUserInfo);
+    public Result<?> finishBis(@PathVariable String id){
+        return bisListService.finishBis(id);
     }
 
     /**
      *  驳回Bis
      */
     @PutMapping("/back/{id}")
-    public Result<?> backBis(@PathVariable String id, @CurrentUser CurrentUserInfo currentUserInfo){
-        return bisListService.backBis(id,currentUserInfo);
+    public Result<?> backBis(@PathVariable String id){
+        return bisListService.backBis(id);
     }
 
     /**
      * 取消Bis
      */
     @PutMapping("/cancel/{id}")
-    public Result<?> cancelBis(@PathVariable String id, @CurrentUser CurrentUserInfo currentUserInfo){
-        return bisListService.cancelBis(id,currentUserInfo);
+    public Result<?> cancelBis(@PathVariable String id){
+        return bisListService.cancelBis(id);
     }
 
     /**
      * 指派Bis
      */
     @PutMapping("/assgin/{id}")
-    public Result<?> assginBis(@PathVariable String id, @RequestBody CreatePersonList pseron, @CurrentUser CurrentUserInfo currentUserInfo){
-        return bisListService.assginBis(id,pseron,currentUserInfo);
+    public Result<?> assginBis(@PathVariable String id, @RequestBody CreatePersonList pseron){
+        return bisListService.assginBis(id,pseron);
     }
 
     /**
      * 接受Bis
      */
     @PutMapping("/accept/{id}")
-    public Result<?> acceptBis(@PathVariable String id, @CurrentUser CurrentUserInfo currentUserInfo){
-        return bisListService.acceptBis(id,currentUserInfo);
+    public Result<?> acceptBis(@PathVariable String id){
+        return bisListService.acceptBis(id);
     }
 
 }

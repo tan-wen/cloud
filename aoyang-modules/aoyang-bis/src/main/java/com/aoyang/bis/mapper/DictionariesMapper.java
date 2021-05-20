@@ -1,7 +1,7 @@
 package com.aoyang.bis.mapper;
 
 
-import com.aoyang.bis.entity.Dictionaries;
+import com.aoyang.bis.domain.Dictionaries;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

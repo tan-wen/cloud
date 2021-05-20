@@ -1,7 +1,7 @@
 package com.aoyang.bis.service;
 
 import com.aoyang.bis.common.Result;
-import com.aoyang.bis.entity.BisDetail;
+import com.aoyang.bis.domain.BisDetail;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

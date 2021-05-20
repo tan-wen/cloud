@@ -3,18 +3,25 @@ package com.aoyang.bis.service.impl;
 import com.aoyang.bis.common.Result;
 import com.aoyang.bis.common.utils.LocalDateTimeUtil;
 import com.aoyang.bis.common.utils.MyStringUtils;
-import com.aoyang.bis.common.wxapi.WxApi;
+import com.aoyang.bis.common.wxapi.WxWorkApi;
+import com.aoyang.bis.domain.*;
 import com.aoyang.bis.dto.*;
-import com.aoyang.bis.entity.*;
 import com.aoyang.bis.mapper.BisListMapper;
 import com.aoyang.bis.mapper.UserMapper;
 import com.aoyang.bis.service.BisDetailService;
 import com.aoyang.bis.service.BisListService;
+import com.aoyang.bis.service.UserDetailService;
 import com.aoyang.bis.service.UserOperationService;
+import com.aoyang.wx.work.model.WxWorkRe;
+import com.aoyang.wx.work.model.info.applets.AppletsInfo;
+import com.aoyang.wx.work.model.info.applets.ContentItem;
+import com.aoyang.wx.work.model.info.applets.MiniprogramNotice;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ruoyi.common.core.utils.SecurityUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.text.ParseException;
@@ -22,7 +29,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -44,9 +50,16 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
     @Autowired
     private UserOperationService userOperationService;
     @Autowired
-    private WxApi wxApi;
+    private WxWorkApi wxWorkApi;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private UserDetailService userDetailService;
+    @Value("${agentId}")
+    private String agentId;
+    @Value("${appid}")
+    private String appid;
+
 
 
     @Override
@@ -71,32 +84,33 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Result<?> supportOrNot(String id, String type, CurrentUserInfo currentUserInfo) {
+    public Result<?> supportOrNot(String id, String type) {
         BisList bisList = this.getById(id);
+
 
         if (SupportEnum.SUPPORT.getCode().equals(type)) {
             QueryWrapper<UserOperation> userOperationQueryWrapper = new QueryWrapper<>();
             userOperationQueryWrapper.eq("pid",id);
-            userOperationQueryWrapper.eq("user_id", currentUserInfo.getUserid());
+            userOperationQueryWrapper.eq("user_id", SecurityUtils.getUsername());
             userOperationQueryWrapper.eq("type", "support");
             UserOperation one = userOperationService.getOne(userOperationQueryWrapper);
             if (null != one) {
                 return Result.error(200, "已经点赞过");
             }
             bisList.setSupport(bisList.getSupport() + 1);
-            userOperationService.addInfo(id,"support", currentUserInfo.getUserid());
+            userOperationService.addInfo(id,"support",   SecurityUtils.getUsername());
         }
         if (SupportEnum.UNSUPPORT.getCode().equals(type)) {
             QueryWrapper<UserOperation> userOperationQueryWrapper = new QueryWrapper<>();
             userOperationQueryWrapper.eq("pid",id);
-            userOperationQueryWrapper.eq("user_id", currentUserInfo.getUserid());
+            userOperationQueryWrapper.eq("user_id",   SecurityUtils.getUsername());
             userOperationQueryWrapper.eq("type", "unsupported");
             UserOperation one = userOperationService.getOne(userOperationQueryWrapper);
             if (null != one) {
                 return Result.error(200, "已经踩过");
             }
             bisList.setUnsupported(bisList.getUnsupported() + 1);
-            userOperationService.addInfo(id,"unsupported", currentUserInfo.getUserid());
+            userOperationService.addInfo(id,"unsupported",   SecurityUtils.getUsername());
         }
         this.updateById(bisList);
         return Result.ok(bisList);
@@ -104,20 +118,22 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Result<?> addBis(BisListAddDto bisListAddDto, CurrentUserInfo currentUserInfo) {
+    public Result<?> addBis(BisListAddDto bisListAddDto) {
         String id = UUID.randomUUID().toString().replace("-", "");
-        BisList bisList = this.buildBisList(id,bisListAddDto,currentUserInfo);
-        BisDetail bisDetail = this.buildBisDetail(id,bisListAddDto, currentUserInfo);
+        BisList bisList = this.buildBisList(id,bisListAddDto);
+        BisDetail bisDetail = this.buildBisDetail(id,bisListAddDto);
         this.save(bisList);
         bisDetailService.save(bisDetail);
+
+        UserDetail userDetail = userDetailService.findByUserId(SecurityUtils.getUsername());
         //推送消息
-        pushMsg("【"+bisList.getTitle()+"】",currentUserInfo.getUserid(),"提出人：",currentUserInfo.getName(),id);
+        send("【"+bisList.getTitle()+"】",  SecurityUtils.getUsername(),"提出人：",userDetail.getName(),id);
         return Result.ok("添加成功");
 
     }
 
     @Override
-    public Result<?> findMyList(String state, LocalDateTime createTime, String classification, String type, String secondaryClassification, CurrentUserInfo currentUserInfo) throws ParseException {
+    public Result<?> findMyList(String state, LocalDateTime createTime, String classification, String type, String secondaryClassification) throws ParseException {
         String startTime ="";
         String endTime="";
         if(createTime!=null){
@@ -129,19 +145,19 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
         }
 
         if(ListTypeEnum.PROPOSE.getCode().equals(type)){
-            return Result.ok(this.getAllinfo(state, currentUserInfo.getUserid(), createTime, classification, secondaryClassification));
+            return Result.ok(this.getAllinfo(state, SecurityUtils.getUsername(), createTime, classification, secondaryClassification));
         }
         else if(ListTypeEnum.INCHARGE.getCode().equals(type)) {
-            return Result.ok(bisListMapper.findMyCharge(state, currentUserInfo.getUserid(), startTime ,endTime, classification, secondaryClassification));
+            return Result.ok(bisListMapper.findMyCharge(state,   SecurityUtils.getUsername(), startTime ,endTime, classification, secondaryClassification));
         }
         else {
-            return Result.ok(bisListMapper.findAllInfo(state, currentUserInfo.getUserid(),  startTime ,endTime, classification, secondaryClassification));
+            return Result.ok(bisListMapper.findAllInfo(state,   SecurityUtils.getUsername(),  startTime ,endTime, classification, secondaryClassification));
         }
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Result<?> claimBis(String id,CurrentUserInfo currentUserInfo) {
+    public Result<?> claimBis(String id) {
         BisList bisList = this.getById(id);
         if(!StatusEnum.UNPROCESSED.getCode().equals(bisList.getState())){
             return Result.error(200,"认领失败，状态已变更，或已被他人操作");
@@ -151,8 +167,9 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
         BisDetail bisDetail = bisDetailService.getOne(wrapper);
         bisList.setState(StatusEnum.CLAIMED.getCode());
         bisDetail.setAssignedTime(LocalDateTime.now());//指派和认领时间一致
-        bisDetail.setChargePerson(currentUserInfo.getName());
-        bisDetail.setChargePersonId(currentUserInfo.getUserid());
+        UserDetail userDetail = userDetailService.findByUserId(SecurityUtils.getUsername());
+        bisDetail.setChargePerson(userDetail.getName());
+        bisDetail.setChargePersonId(  SecurityUtils.getUsername());
         this.updateById(bisList);
         bisDetailService.updateById(bisDetail);
         return Result.ok("认领成功");
@@ -160,7 +177,7 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Result<?> startBis(String id, CurrentUserInfo currentUserInfo) {
+    public Result<?> startBis(String id) {
         BisList bisList = this.getById(id);
         if(!(StatusEnum.CLAIMED.getCode().equals(bisList.getState())||StatusEnum.ACCEPTED.getCode().equals(bisList.getState()))){
             return Result.error(200,"开始失败，状态已变更");
@@ -176,7 +193,7 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
     }
 
     @Override
-    public Result<?> finishBis(String id, CurrentUserInfo currentUserInfo) {
+    public Result<?> finishBis(String id) {
         BisList bisList = this.getById(id);
         if(!(StatusEnum.ONGOING.getCode().equals(bisList.getState()))){
             return Result.error(200,"结束失败，状态已变更");
@@ -194,12 +211,14 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
         List<UsersDto> userList = userMapper.findUserList("");
         List<String> useridlist = userList.stream().map(e -> e.getUserid()).collect(Collectors.toList());
         String s = MyStringUtils.buildTouser(useridlist);
-        pushMsg("您有一条BIS已被完成",s,"提出人",currentUserInfo.getName(),id);
+
+        UserDetail userDetail = userDetailService.findByUserId(SecurityUtils.getUsername());
+        send("您有一条BIS已被完成",s,"提出人",userDetail.getName(),id);
         return Result.ok("完成成功");
     }
 
     @Override
-    public Result<?> cancelBis(String id, CurrentUserInfo currentUserInfo) {
+    public Result<?> cancelBis(String id) {
         BisList bisList = this.getById(id);
         if(!(StatusEnum.UNPROCESSED.getCode().equals(bisList.getState()))){
             return Result.error(200,"取消失败，状态已变更，或已被指派或认领");
@@ -211,7 +230,7 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
     }
 
     @Override
-    public Result<?> backBis(String id, CurrentUserInfo currentUserInfo) {
+    public Result<?> backBis(String id) {
         BisList bisList = this.getById(id);
         if(!(StatusEnum.ASSIGNED.getCode().equals(bisList.getState()))){
             return Result.error(200,"驳回失败，状态已变更");
@@ -223,7 +242,7 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
     }
 
     @Override
-    public Result<?> assginBis(String id,CreatePersonList user, CurrentUserInfo currentUserInfo) {
+    public Result<?> assginBis(String id,CreatePersonList user) {
         BisList bisList = this.getById(id);
         if(!(StatusEnum.UNPROCESSED.getCode().equals(bisList.getState()))){
             return Result.error(200,"指派失败，状态已变更");
@@ -234,8 +253,9 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
         bisList.setState(StatusEnum.ASSIGNED.getCode());
         bisDetail.setChargePersonId(user.getUserId());
         bisDetail.setChargePerson(user.getName());
-        bisDetail.setDesignator(currentUserInfo.getName());
-        bisDetail.setDesignatorId(currentUserInfo.getUserid());
+        UserDetail userDetail = userDetailService.findByUserId(SecurityUtils.getUsername());
+        bisDetail.setDesignator(userDetail.getName());
+        bisDetail.setDesignatorId(  SecurityUtils.getUsername());
         bisDetail.setAssignedTime(LocalDateTime.now());
 
         this.updateById(bisList);
@@ -245,7 +265,7 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
     }
 
     @Override
-    public Result<?> acceptBis(String id, CurrentUserInfo currentUserInfo) {
+    public Result<?> acceptBis(String id) {
         BisList bisList = this.getById(id);
         if(!(StatusEnum.ASSIGNED.getCode().equals(bisList.getState()))){
             return Result.error(200,"接受失败，状态已变更");
@@ -278,13 +298,14 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
         return bisListMapper.selectList(wrapper);
     }
 
-    private BisList buildBisList(String id,BisListAddDto bisListAddDto,CurrentUserInfo currentUserInfo) {
+    private BisList buildBisList(String id,BisListAddDto bisListAddDto) {
+        UserDetail userDetail = userDetailService.findByUserId(SecurityUtils.getUsername());
        return BisList.builder()
                .id(id)
                .state(StatusEnum.UNPROCESSED.getCode())
                .title(bisListAddDto.getTitle())
-               .submitter(currentUserInfo.getName())
-               .submitterId(currentUserInfo.getUserid())
+               .submitter(userDetail.getName())
+               .submitterId(  SecurityUtils.getUsername())
                .createTime(LocalDateTime.now())
                .view(1)
                .support(0)
@@ -295,7 +316,7 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
 
     }
 
-    private BisDetail buildBisDetail(String id,BisListAddDto bisListAddDto, CurrentUserInfo currentUserInfo) {
+    private BisDetail buildBisDetail(String id,BisListAddDto bisListAddDto) {
         return BisDetail.builder()
                 .pid(id)
                 .title(bisListAddDto.getTitle())
@@ -309,25 +330,23 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
                 .build();
     }
 
-    /**
-     * @param title 标题
-     * @param tortoise 用户userid集
-     * @param id 主表ID
-     * @return
-     */
-    private Map<String, Object> pushMsg(String title, String tortoise,String key, String value,String id){
-        MsgData msgData = new MsgData();
-        msgData.setTitle(title);
-        msgData.setTouser(tortoise);
-        msgData.setPage("/pages/list/detail?id="+id);
-        List<Info> list = new ArrayList<>();
-        Info info = new Info();
-        info.setKey(key);
-        info.setValue(value);
-        list.add(info);
-        msgData.setContent_item(list);
-        return wxApi.sendMessage(msgData);
+    private WxWorkRe send(String title,String touser,String key,String value,String id){
+        AppletsInfo appletsInfo = new AppletsInfo();
+        MiniprogramNotice miniprogramNotice = new MiniprogramNotice();
+        ContentItem contentItem = new ContentItem();
+        contentItem.setKey(key);
+        contentItem.setValue(value);
+        ArrayList<ContentItem> contentItems = new ArrayList<>();
+        miniprogramNotice.setAppid(appid);
+        miniprogramNotice.setTitle(title);
+        miniprogramNotice.setContent_item(contentItems);
+        miniprogramNotice.setPage("/pages/list/detail?id="+id);
+        appletsInfo.setMiniprogram_notice(miniprogramNotice);
+        appletsInfo.setMsgtype("miniprogram_notice");
+        appletsInfo.setTouser(touser);
+        return wxWorkApi.sendMessage(agentId,appletsInfo);
     }
+
 }
 
 

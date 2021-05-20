@@ -1,11 +1,9 @@
 package com.aoyang.bis.mapper;
 
+import com.aoyang.bis.domain.BisList;
 import com.aoyang.bis.dto.CreatePersonList;
-import com.aoyang.bis.entity.BisList;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**

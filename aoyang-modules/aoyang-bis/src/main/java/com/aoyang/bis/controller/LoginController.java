@@ -1,21 +1,17 @@
 package com.aoyang.bis.controller;
 
 import com.aoyang.bis.common.Result;
-import com.aoyang.bis.entity.User;
 import com.aoyang.bis.service.UserDetailService;
 import com.aoyang.bis.service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 
 
 /**
  * @ClassName : LoginController
- * @Description :bis系统登陆
+ * @Description :bis系统登陆,在获取token后用于调用微信接口获取用户详情以及保存用户主信息
  * @Author : GC
  * @Date: 2021-04-27 15:09
  */
@@ -31,11 +27,10 @@ public class LoginController {
         this.userService = userService;
     }
 
-
     @PostMapping
-    public Result<?> login(@RequestBody User user) throws Exception {
+    public Result<?> login() throws Exception {
         //创建用户
-        return userService.login(user);
+        return userService.login();
     }
 
 

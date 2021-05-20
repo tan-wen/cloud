@@ -1,10 +1,8 @@
 package com.aoyang.bis.controller;
 
 import com.aoyang.bis.common.Result;
-import com.aoyang.bis.dto.CurrentUserInfo;
-import com.aoyang.bis.entity.CurrentUser;
-import com.aoyang.bis.entity.UserDetail;
 import com.aoyang.bis.service.UserDetailService;
+import com.ruoyi.common.core.utils.SecurityUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +24,8 @@ public class CenterInfoController {
     }
 
     @GetMapping
-    public Result<?> searchInfo(@CurrentUser CurrentUserInfo userInfo){
-        return Result.ok(userDetailService.findByUserId(userInfo.getUserid()));
+    public Result<?> searchInfo(){
+        String username = SecurityUtils.getUsername();
+        return Result.ok(userDetailService.findByUserId(username));
     }
 }

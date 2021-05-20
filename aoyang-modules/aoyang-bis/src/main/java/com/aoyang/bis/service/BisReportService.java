@@ -1,10 +1,9 @@
 package com.aoyang.bis.service;
 
 import com.aoyang.bis.common.Result;
-import com.aoyang.bis.dto.CurrentUserInfo;
-import com.aoyang.bis.entity.BisDetail;
-import com.aoyang.bis.entity.BisReport;
+import com.aoyang.bis.domain.BisReport;
 import com.baomidou.mybatisplus.extension.service.IService;
+
 
 /**
  * <p>
@@ -18,5 +17,5 @@ public interface BisReportService extends IService<BisReport> {
 
     Result<?> findByPid(String id);
 
-    Result<?> addinfo(BisReport bisReport, CurrentUserInfo currentUserInfo);
+    Result<?> addinfo(BisReport bisReport );
 }

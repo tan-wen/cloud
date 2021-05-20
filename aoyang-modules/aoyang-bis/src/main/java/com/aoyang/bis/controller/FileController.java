@@ -1,14 +1,11 @@
 package com.aoyang.bis.controller;
 
 import com.aoyang.bis.common.Result;
+import com.aoyang.bis.domain.Files;
 import com.aoyang.bis.dto.CurrentUserInfo;
-import com.aoyang.bis.entity.CurrentUser;
-import com.aoyang.bis.entity.Files;
 import com.aoyang.bis.service.FilesService;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
@@ -30,8 +27,8 @@ public class FileController {
     }
 
     @PostMapping
-    public Result<?> FileUpLoad(HttpServletRequest request, MultipartFile file,@CurrentUser CurrentUserInfo userInfo) throws IOException {
-        return filesService.addFile(request, file ,userInfo);
+    public Result<?> FileUpLoad(HttpServletRequest request, MultipartFile file) throws IOException {
+        return filesService.addFile(request, file);
     }
 
     @GetMapping

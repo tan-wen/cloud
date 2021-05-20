@@ -1,4 +1,4 @@
-package com.aoyang.bis.entity;
+package com.aoyang.bis.domain;
 
 public enum ImportanceEnum {
 

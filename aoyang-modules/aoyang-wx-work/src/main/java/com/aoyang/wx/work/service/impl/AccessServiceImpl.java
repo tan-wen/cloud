@@ -1,10 +1,10 @@
 package com.aoyang.wx.work.service.impl;
 
 
-import com.aoyang.wx.work.domain.AccessToken;
 import com.aoyang.wx.work.config.WxWork;
-import com.aoyang.wx.work.service.WxAccessService;
-import com.aoyang.wx.work.service.WxWorkRemoteService;
+import com.aoyang.wx.work.domain.AccessToken;
+import com.aoyang.wx.work.service.AccessService;
+import com.aoyang.wx.work.service.remote.WxWorkService;
 import com.ruoyi.common.core.exception.BaseException;
 import com.ruoyi.common.core.utils.StringUtils;
 import com.ruoyi.common.redis.service.RedisService;
@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
  **/
 @Service
 @Slf4j
-public class WxAccessServiceImpl implements WxAccessService {
+public class AccessServiceImpl implements AccessService {
 
     private static final String CACHE_PREFIX = "wx-work-access-token";
 
@@ -31,7 +31,7 @@ public class WxAccessServiceImpl implements WxAccessService {
     private WxWork wxWork;
 
     @Resource
-    private WxWorkRemoteService wxWorkRemoteService;
+    private WxWorkService wxWorkRemoteService;
 
     @Resource
     private RedisService redisService;

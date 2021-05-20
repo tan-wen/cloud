@@ -1,4 +1,4 @@
-package com.aoyang.bis.entity;
+package com.aoyang.bis.domain;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
