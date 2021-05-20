@@ -1,5 +1,6 @@
 package com.aoyang.wx.work.controller;
 
+import com.aoyang.wx.work.config.Constant;
 import com.aoyang.wx.work.domain.UserDetail;
 import com.aoyang.wx.work.domain.WxMediaInfo;
 import com.aoyang.wx.work.domain.WxRInfo;
@@ -20,13 +21,9 @@ import javax.annotation.Resource;
  * @Date: 2021-05-19 16:32
  */
 @RestController
-@RequestMapping("/userdetail")
+@RequestMapping("/user")
 @Slf4j
 public class WxUserDetailController {
-
-    private final String TIME_OUT_CODE = "40001";
-
-    private final String reinfo="已调用";
 
     @Resource
     private WxAccessService wxAccessService;
@@ -34,15 +31,15 @@ public class WxUserDetailController {
     @Resource
     private WxWorkRemoteService wxWorkRemoteService;
 
-    @GetMapping
-    public R<?> getUserDetail(@RequestParam String agentId, @RequestParam String userId) {
+    @GetMapping("/{agentId}/{userId}")
+    public R<?> getUserDetail(@PathVariable String agentId, @PathVariable String userId) {
         String accessToken = wxAccessService.getAccessToken(agentId);
         UserDetail userDetail = findUserDetail(accessToken, userId);
-        if (TIME_OUT_CODE.equals(userDetail.getErrcode())){
+        if (Constant.TIME_OUT_CODE.equals(userDetail.getErrcode())){
             String s = wxAccessService.refreshAccessToken(agentId);
-            return R.ok(findUserDetail(s, userId),reinfo);
+            return R.ok(findUserDetail(s, userId),Constant.REINFO);
         }
-        return R.ok(userDetail,reinfo);
+        return R.ok(userDetail,Constant.REINFO);
     }
 
     private UserDetail findUserDetail(String accessToken, String userId){
