@@ -1,8 +1,6 @@
 package com.aoyang.wx.work.controller;
 
 import com.aoyang.wx.work.domain.WxMediaInfo;
-import com.aoyang.wx.work.domain.WxRInfo;
-import com.aoyang.wx.work.model.qymsgInfo.interactivetaskcardinfo.InteractiveTaskcardInfo;
 import com.aoyang.wx.work.service.WxAccessService;
 import com.aoyang.wx.work.service.WxMediaService;
 import com.ruoyi.common.core.domain.R;
