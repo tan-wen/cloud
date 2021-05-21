@@ -68,7 +68,9 @@ public class AuthFilter implements GlobalFilter, Ordered
             return setUnauthorizedResponse(exchange, "登录状态已过期");
         }
         JSONObject obj = JSONObject.parseObject(userStr);
-        String userid = obj.getString("userid");
+        //String userid = obj.getString("userid");
+        //TODO 暂时使用
+        String userid = "123456";
         String username = obj.getString("username");
         if (StringUtils.isBlank(userid) || StringUtils.isBlank(username))
         {
