@@ -10,8 +10,8 @@
          group by a.submitter , a.submitter_id
     </select>
 
-    <select id="findMyCharge" resultType="com.aoyang.bis.entity.BisList">
-      select a.* from bis_list a left join bis_detail b on a.id = b.pid where 1=1
+    <select id="findMyCharge" resultType="com.aoyang.bis.domain.BisList">
+        select a.* from bis_list a left join bis_detail b on a.id = b.pid where 1=1
         <if test="state != null and state != ''">
             and a.state = #{state}
         </if>
@@ -34,7 +34,7 @@
     </select>
 
 
-    <select id="findAllInfo" resultType="com.aoyang.bis.entity.BisList">
+    <select id="findAllInfo" resultType="com.aoyang.bis.domain.BisList">
         select a.* from bis_list a left join bis_detail b on a.id = b.pid where 1=1
         <if test="state != null and state != ''">
             and a.state = #{state}
