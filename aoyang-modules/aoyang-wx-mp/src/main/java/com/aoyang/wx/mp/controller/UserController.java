@@ -26,18 +26,13 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/{appId}/{code}")
-    public LoginUser getUser(@PathVariable("appId") String appId, @PathVariable("code") String code) {
+    public String getUser(@PathVariable("appId") String appId, @PathVariable("code") String code) {
         String openId = userService.getOpenId(appId, code);
 
         if (StringUtils.isEmpty(openId)) {
             throw new BaseException("未正确获取到用户id");
         }
-        LoginUser loginUser = new LoginUser();
-        SysUser sysUser = new SysUser();
-        //注意，这里是工号对应登录的系统用户名
-        sysUser.setUserName(openId);
-        loginUser.setSysUser(sysUser);
-        return loginUser;
+        return openId;
     }
 }
 

@@ -23,12 +23,12 @@ public class WxWorkUserController {
     private UserService wxWorkUserService;
 
     @GetMapping("/wx/work/user/{agentId}/{code}")
-    public LoginUser getUser(@PathVariable String agentId ,@PathVariable String code) {
+    public String getUser(@PathVariable String agentId ,@PathVariable String code) {
         return wxWorkUserService.getUser(agentId, code);
     }
 
     @GetMapping("/wx/miniapp/user/{agentId}/{code}")
-    public LoginUser getMiniAppUser(@PathVariable String agentId ,@PathVariable String code) {
+    public String getMiniAppUser(@PathVariable String agentId ,@PathVariable String code) {
         return wxWorkUserService.getMiniAppUser(agentId, code);
     }
 

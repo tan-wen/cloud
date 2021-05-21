@@ -246,4 +246,15 @@ public class SysUserController extends BaseController
         user.setUpdateBy(SecurityUtils.getUsername());
         return toAjax(userService.updateUserStatus(user));
     }
+
+    @PostMapping("/getOrInsert/{username}")
+    public SysUser getOrInsert(@PathVariable String username) {
+        SysUser sysUser = userService.selectUserByUserName(username);
+        if (sysUser == null) {
+            sysUser = new SysUser();
+            sysUser.setUserName(username);
+            userService.insertUser(sysUser);
+        }
+        return sysUser;
+    }
 }

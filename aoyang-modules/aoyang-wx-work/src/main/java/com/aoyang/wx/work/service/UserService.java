@@ -11,9 +11,9 @@ import com.ruoyi.system.api.model.LoginUser;
  **/
 public interface UserService {
 
-    LoginUser getUser(String agentId, String code);
+    String getUser(String agentId, String code);
 
-    LoginUser getMiniAppUser(String agentId, String code);
+    String getMiniAppUser(String agentId, String code);
 
     WxWorkRe getuserDetail(String agentId, String userId);
 
