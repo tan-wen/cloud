@@ -59,14 +59,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         HashMap<String, Object> userinfo = (HashMap<String, Object>) workRe.data;
         UserDetail userDetail = this.buildUserDetail(userinfo);
 
-        User user = new User();
-
-
         if(userinfo!=null &&"0".equals(userinfo.get("errcode").toString()) ){
             //创建用户
             User userf = this.findByUserId(username);
             UserDetail detail = userDetailService.findByUserId(username);
             if(userf==null){
+                User user = new User();
+                user.setUserid(username);
                 user.setCreateTime(LocalDateTime.now());
                 userDetail.setCreateTime(LocalDateTime.now());
                 if(detail!=null){
@@ -79,17 +78,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                     this.save(user);
                 }
             }else {
-                user.setUpdateTime(LocalDateTime.now());
-                user.setId(userf.getId());
+                userf.setUpdateTime(LocalDateTime.now());
+                userf.setUserid(username);
                 if(detail!=null){
                     userDetail.setId(detail.getId());
                     userDetail.setUpdateTime(LocalDateTime.now());
                     userDetailService.updateById(userDetail);
-                    this.updateById(user);
+                    this.updateById(userf);
                 }else {
                     userDetail.setCreateTime(LocalDateTime.now());
                     userDetailService.save(userDetail);
-                    this.updateById(user);
+                    this.updateById(userf);
                 }
             }
             return Result.ok(userDetail);

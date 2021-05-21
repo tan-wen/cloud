@@ -140,18 +140,18 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
             LocalDateTime start = LocalDateTimeUtil.getDateInfo(createTime, "start");
             LocalDateTime end = LocalDateTimeUtil.getDateInfo(createTime, "end");
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-             startTime = dateTimeFormatter.format(start);
-             endTime = dateTimeFormatter.format(end);
+            startTime = dateTimeFormatter.format(start);
+            endTime = dateTimeFormatter.format(end);
         }
 
         if(ListTypeEnum.PROPOSE.getCode().equals(type)){
             return Result.ok(this.getAllinfo(state, SecurityUtils.getUsername(), createTime, classification, secondaryClassification));
         }
         else if(ListTypeEnum.INCHARGE.getCode().equals(type)) {
-            return Result.ok(bisListMapper.findMyCharge(state,   SecurityUtils.getUsername(), startTime ,endTime, classification, secondaryClassification));
+            return Result.ok(bisListMapper.findMyCharge(state, SecurityUtils.getUsername(), startTime ,endTime, classification, secondaryClassification));
         }
         else {
-            return Result.ok(bisListMapper.findAllInfo(state,   SecurityUtils.getUsername(),  startTime ,endTime, classification, secondaryClassification));
+            return Result.ok(bisListMapper.findAllInfo(state, SecurityUtils.getUsername(),  startTime ,endTime, classification, secondaryClassification));
         }
     }
 
