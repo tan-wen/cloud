@@ -1,6 +1,7 @@
 package com.aoyang.wx.work.model.info.interactivetask;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.List;
@@ -17,7 +18,8 @@ public class InteractiveTaskcard {
     private String title;
     private String description;
     private String url;
-    private String task_id;
+    @JsonProperty(value = "task_id")
+    private String taskId;
     private List<Btn> btn;
 
 }

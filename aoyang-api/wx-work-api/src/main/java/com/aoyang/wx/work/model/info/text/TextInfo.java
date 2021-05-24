@@ -2,6 +2,7 @@ package com.aoyang.wx.work.model.info.text;
 
 import com.aoyang.wx.work.model.info.Base;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 /**
@@ -43,7 +44,8 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 public class TextInfo extends Base {
-    private Integer agentid;
+    @JsonProperty(value = "agentid")
+    private Integer agentId;
     private Integer safe;
     private Text text;
 }

@@ -1,6 +1,7 @@
 package com.aoyang.wx.work.model.info.interactivetask;
 
 import com.aoyang.wx.work.model.info.Base;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 /**
@@ -59,6 +60,8 @@ import lombok.Data;
  */
 @Data
 public class InteractiveTaskcardInfo extends Base {
-    private Integer agentid;
-    private InteractiveTaskcard interactive_taskcard;
+    @JsonProperty(value = "agentid")
+    private Integer agentId;
+    @JsonProperty(value = "interactive_taskcard")
+    private InteractiveTaskcard interactiveTaskcard;
 }

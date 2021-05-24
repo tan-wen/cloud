@@ -1,5 +1,6 @@
 package com.aoyang.wx.work.model.info.voice;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 /**
@@ -10,5 +11,6 @@ import lombok.Data;
  */
 @Data
 public class Voice {
-    private String media_id;
+    @JsonProperty(value = "media_id")
+    private String mediaId;
 }

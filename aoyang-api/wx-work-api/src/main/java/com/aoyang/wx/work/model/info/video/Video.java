@@ -1,6 +1,7 @@
 package com.aoyang.wx.work.model.info.video;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 /**
@@ -13,6 +14,7 @@ import lombok.Data;
 @Data
 public class Video {
     private String title;
-    private String media_id;
+    @JsonProperty(value = "media_id")
+    private String mediaId;
     private String description;
 }

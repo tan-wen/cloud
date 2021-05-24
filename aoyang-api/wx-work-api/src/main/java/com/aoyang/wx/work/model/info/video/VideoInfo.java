@@ -1,6 +1,7 @@
 package com.aoyang.wx.work.model.info.video;
 
 import com.aoyang.wx.work.model.info.Base;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @ClassName : VideoInfo
@@ -38,7 +39,8 @@ import com.aoyang.wx.work.model.info.Base;
  * @Date: 2021-05-19 11:00
  */
 public class VideoInfo extends Base {
-    private Integer agentid;
+    @JsonProperty(value = "agentid")
+    private Integer agentId;
     private Integer safe;
     private Video video;
 }

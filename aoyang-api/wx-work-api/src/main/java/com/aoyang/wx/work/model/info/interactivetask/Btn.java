@@ -1,5 +1,6 @@
 package com.aoyang.wx.work.model.info.interactivetask;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 /**
@@ -13,5 +14,6 @@ public class Btn {
     private String key;
     private String name;
     private String color;
-    private Boolean is_bold;
+    @JsonProperty(value = "is_bold")
+    private Boolean isBold;
 }

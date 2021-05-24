@@ -2,6 +2,7 @@ package com.aoyang.wx.work.model.info.applets;
 
 import com.aoyang.wx.work.model.info.Base;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 /**
@@ -67,5 +68,6 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 public class AppletsInfo extends Base {
-    private MiniprogramNotice miniprogram_notice;
+    @JsonProperty(value = "miniprogram_notice", required = true)
+    private MiniprogramNotice miniprogramNotice;
 }

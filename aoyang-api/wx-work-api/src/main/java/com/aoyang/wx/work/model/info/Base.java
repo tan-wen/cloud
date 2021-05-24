@@ -1,6 +1,7 @@
 package com.aoyang.wx.work.model.info;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 /**
@@ -16,6 +17,8 @@ public class Base {
     private String toparty;
     private String totag;
     private String msgtype;
-    private Integer enable_duplicate_check;
-    private Integer duplicate_check_interval;
+    @JsonProperty(value = "enable_duplicate_check")
+    private Integer enableDuplicateCheck;
+    @JsonProperty(value = "duplicate_check_interval")
+    private Integer duplicateCheckInterval;
 }

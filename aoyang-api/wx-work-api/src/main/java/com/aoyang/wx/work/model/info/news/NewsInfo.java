@@ -1,6 +1,7 @@
 package com.aoyang.wx.work.model.info.news;
 
 import com.aoyang.wx.work.model.info.Base;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 /**
@@ -48,5 +49,6 @@ import lombok.Data;
 @Data
 public class NewsInfo extends Base {
     private News news;
-    private Integer agentid;
+    @JsonProperty(value = "agentid")
+    private Integer agentId;
 }

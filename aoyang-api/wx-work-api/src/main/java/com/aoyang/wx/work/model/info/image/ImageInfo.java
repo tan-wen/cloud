@@ -2,6 +2,7 @@ package com.aoyang.wx.work.model.info.image;
 
 import com.aoyang.wx.work.model.info.Base;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 /**
@@ -38,7 +39,8 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 public class ImageInfo extends Base {
-    private Integer agentid;
+    @JsonProperty(value = "agentid")
+    private Integer agentId;
     private Integer safe;
     private Image image;
 }

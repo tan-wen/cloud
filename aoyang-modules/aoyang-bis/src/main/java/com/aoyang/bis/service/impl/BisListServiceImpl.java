@@ -337,11 +337,11 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
         contentItem.setKey(key);
         contentItem.setValue(value);
         ArrayList<ContentItem> contentItems = new ArrayList<>();
-        miniprogramNotice.setAppid(appid);
+        miniprogramNotice.setAppId(appid);
         miniprogramNotice.setTitle(title);
-        miniprogramNotice.setContent_item(contentItems);
+        miniprogramNotice.setContentItem(contentItems);
         miniprogramNotice.setPage("/pages/list/detail?id="+id);
-        appletsInfo.setMiniprogram_notice(miniprogramNotice);
+        appletsInfo.setMiniprogramNotice(miniprogramNotice);
         appletsInfo.setMsgtype("miniprogram_notice");
         appletsInfo.setTouser(touser);
         return wxWorkApi.sendMessage(agentId,appletsInfo);
