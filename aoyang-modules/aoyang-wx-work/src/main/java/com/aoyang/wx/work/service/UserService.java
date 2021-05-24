@@ -1,6 +1,7 @@
 package com.aoyang.wx.work.service;
 
 import com.aoyang.wx.work.model.WxWorkRe;
+import com.ruoyi.system.api.domain.SysUser;
 import com.ruoyi.system.api.model.LoginUser;
 
 /**
@@ -17,4 +18,5 @@ public interface UserService {
 
     WxWorkRe getuserDetail(String agentId, String userId);
 
+    SysUser getMiniAppUserDetail(String agentId, String code);
 }

@@ -24,7 +24,6 @@ public class WxUserDetailController {
     @Resource
     private UserService userService;
 
-
     @GetMapping("/{agentId}/{userId}")
     public WxWorkRe getUserDetail(@PathVariable String agentId, @PathVariable String userId) {
         return userService.getuserDetail(agentId, userId);

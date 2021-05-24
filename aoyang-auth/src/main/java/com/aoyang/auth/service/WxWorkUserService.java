@@ -1,6 +1,7 @@
 package com.aoyang.auth.service;
 
 import com.ruoyi.common.core.constant.ServiceNameConstants;
+import com.ruoyi.system.api.domain.SysUser;
 import com.ruoyi.system.api.model.LoginUser;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,4 +24,8 @@ public interface WxWorkUserService {
     @GetMapping("/wx/miniapp/user/{agentId}/{code}")
     String getMiniAppUser(@PathVariable(value = "agentId") String agentId,
                              @PathVariable(value = "code") String code);
+
+    @GetMapping("/wx/miniapp/detail/{agentId}/{code}")
+    SysUser getMiniAppUserDetail(@PathVariable(value = "agentId") String agentId,
+                                 @PathVariable(value = "code") String code);
 }

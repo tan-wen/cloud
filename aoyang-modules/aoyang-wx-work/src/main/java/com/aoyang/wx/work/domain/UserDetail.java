@@ -24,7 +24,7 @@ public class UserDetail extends WxR {
     /**
      * 手机号码
      */
-    private String usermobile;
+    private String mobile;
 
     /**
      * 成员所属部门ID列表

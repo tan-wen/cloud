@@ -7,6 +7,7 @@ import com.aoyang.auth.service.WxMpUserService;
 import com.aoyang.auth.service.WxWorkUserService;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.utils.StringUtils;
+import com.ruoyi.common.core.web.domain.AjaxResult;
 import com.ruoyi.common.security.service.TokenService;
 import com.ruoyi.system.api.domain.SysUser;
 import com.ruoyi.system.api.model.LoginUser;
@@ -52,8 +53,8 @@ public class TokenController {
         if (wxLogin.hasEmpty()) {
             R.fail("参数不能为空");
         }
-        final String userId = wxWorkUserService.getMiniAppUser(wxLogin.getAgentId(), wxLogin.getCode());
-        return R.ok(tokenService.createToken(createLoginUser(userId)));
+        SysUser miniAppUserDetail = wxWorkUserService.getMiniAppUserDetail(wxLogin.getAgentId(), wxLogin.getCode());
+        return R.ok(tokenService.createToken(createLoginUser(miniAppUserDetail)));
     }
 
     // 微信公众号登录认证
@@ -70,6 +71,13 @@ public class TokenController {
         final SysUser sysUser = sysUserService.getOrInsert(userId);
         LoginUser user = new LoginUser();
         user.setSysUser(sysUser);
+        return user;
+    }
+
+    private LoginUser createLoginUser(SysUser sysUser) {
+        SysUser sysre = sysUserService.getOrInsert(sysUser);
+        LoginUser user = new LoginUser();
+        user.setSysUser(sysre);
         return user;
     }
 

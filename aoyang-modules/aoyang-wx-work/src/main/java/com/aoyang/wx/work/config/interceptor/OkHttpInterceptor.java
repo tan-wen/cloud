@@ -14,6 +14,6 @@ import org.springframework.stereotype.Component;
 public class OkHttpInterceptor implements RequestInterceptor {
     @Override
     public void apply(RequestTemplate requestTemplate) {
-        System.out.println(requestTemplate.body());
+       // System.out.println(requestTemplate.body());
     }
 }

@@ -10,6 +10,8 @@ import com.aoyang.wx.work.service.AccessService;
 import com.aoyang.wx.work.service.UserService;
 import com.aoyang.wx.work.service.remote.WxWorkService;
 import com.ruoyi.common.core.exception.BaseException;
+import com.ruoyi.common.core.utils.StringUtils;
+import com.ruoyi.system.api.domain.SysUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +25,7 @@ import javax.annotation.Resource;
  **/
 @Service
 @Slf4j
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl  implements UserService  {
 
     @Resource
     private AccessService wxAccessService;
@@ -78,6 +80,36 @@ public class UserServiceImpl implements UserService {
         msgRe.info = userDetail.getErrmsg();
         msgRe.data = userDetail;
         return msgRe;
+    }
+
+    @Override
+    public SysUser getMiniAppUserDetail(String agentId, String code) {
+        String userId = getMiniAppUser(agentId, code);
+        WxWorkRe workRe = getuserDetail(agentId, userId);
+        UserDetail data = (UserDetail) workRe.getData();
+        if(!FlagEnum.SUCCESS.getCode().equals(workRe.flag)|| StringUtils.isEmpty(data.getName())){
+            log.error("用户详情获取失败或未获取到用户姓名，{}", workRe.getInfo());
+            throw new BaseException("用户详情获取失败或未获取到用户姓名  ," + workRe.getInfo());
+        }
+        SysUser sysUser = new SysUser();
+        sysUser.setUserName(userId);
+        sysUser.setNickName(data.getName());
+        if(StringUtils.isNotEmpty(data.getGender())){
+            switch(data.getGender()){
+                case "1" :
+                    sysUser.setSex("0");
+                    break;
+                case "2" :
+                    sysUser.setSex("1");
+                    break;
+                default :
+                    sysUser.setSex("2");
+            }
+        }
+        sysUser.setEmail(data.getEmail());
+        sysUser.setPhonenumber(data.getMobile());
+        sysUser.setPassword("123456");
+        return sysUser;
     }
 
 

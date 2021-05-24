@@ -257,4 +257,20 @@ public class SysUserController extends BaseController
         }
         return sysUser;
     }
+
+    @PostMapping("/getOrInsert")
+    public SysUser getOrInsert(@RequestBody SysUser user) {
+        if (UserConstants.UNIQUE.equals(userService.checkUserNameUnique(user.getUserName()))
+        && UserConstants.UNIQUE.equals(userService.checkPhoneUnique(user))
+        && UserConstants.UNIQUE.equals(userService.checkEmailUnique(user))
+        ){
+            user.setCreateBy("小程序端");
+            user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
+            userService.insertUser(user);
+            return user;
+        }else {
+            return userService.selectUserByUserName(user.getUserName());
+        }
+    }
+
 }
