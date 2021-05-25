@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * @ClassName : MsgRe
- * @Description : 消息返回
+ * @Description : 若返回值未抽取到API则返回该对象。
  * @Author : GC
  * @Date: 2021-05-20 09:23
  */
