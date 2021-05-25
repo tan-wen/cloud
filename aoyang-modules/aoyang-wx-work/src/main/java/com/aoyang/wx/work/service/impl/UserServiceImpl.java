@@ -65,10 +65,6 @@ public class UserServiceImpl  implements UserService  {
         UserDetail userDetail = null;
         String accessToken = wxAccessService.getAccessToken(agentId);
         userDetail = wxWorkService.getUserDetail(accessToken, userId);
-        if (Constant.TIME_OUT_CODE.equals(userDetail.getErrcode().toString())) {
-            String s = wxAccessService.refreshAccessToken(agentId);
-            userDetail = wxWorkService.getUserDetail(s, userId);
-        }
         WxWorkRe msgRe = new WxWorkRe();
         if (Constant.SUCCESS_CODE.equals(userDetail.getErrcode().toString())) {
             msgRe.flag = true;

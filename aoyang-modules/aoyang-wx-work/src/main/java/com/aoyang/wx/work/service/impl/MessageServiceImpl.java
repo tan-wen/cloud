@@ -37,10 +37,6 @@ public class MessageServiceImpl implements MessageService {
         String accessToken = accessService.getAccessToken(agentId);
         wxRInfo = workMessageService.sendMessage(accessToken, data);
 
-        if (Constant.TIME_OUT_CODE.equals(wxRInfo.getErrcode().toString())) {
-            String s = accessService.refreshAccessToken(agentId);
-            wxRInfo = workMessageService.sendMessage(s, data);
-        }
         WxWorkRe msgRe = new WxWorkRe();
         if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrcode().toString())) {
             msgRe.flag = true;
@@ -59,10 +55,6 @@ public class MessageServiceImpl implements MessageService {
         String accessToken = accessService.getAccessToken(agentId);
         wxRInfo = workMessageService.sendMessage(accessToken, data);
 
-        if (Constant.TIME_OUT_CODE.equals(wxRInfo.getErrcode().toString())) {
-            String s = accessService.refreshAccessToken(agentId);
-            wxRInfo = workMessageService.sendMessage(s, data);
-        }
         WxWorkRe msgRe = new WxWorkRe();
         if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrcode().toString())) {
             msgRe.flag = true;
@@ -81,10 +73,6 @@ public class MessageServiceImpl implements MessageService {
         String accessToken = accessService.getAccessToken(agentId);
         wxRInfo = workMessageService.sendMessage(accessToken, data);
 
-        if (Constant.TIME_OUT_CODE.equals(wxRInfo.getErrcode().toString())) {
-            String s = accessService.refreshAccessToken(agentId);
-            wxRInfo = workMessageService.sendMessage(s, data);
-        }
         WxWorkRe msgRe = new WxWorkRe();
         if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrcode().toString())) {
             msgRe.flag = true;
@@ -103,10 +91,6 @@ public class MessageServiceImpl implements MessageService {
         String accessToken = accessService.getAccessToken(agentId);
         wxRInfo = workMessageService.sendMessage(accessToken, data);
 
-        if (Constant.TIME_OUT_CODE.equals(wxRInfo.getErrcode().toString())) {
-            String s = accessService.refreshAccessToken(agentId);
-            wxRInfo = workMessageService.sendMessage(s, data);
-        }
         WxWorkRe msgRe = new WxWorkRe();
         if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrcode().toString())) {
             msgRe.flag = true;
@@ -125,10 +109,6 @@ public class MessageServiceImpl implements MessageService {
         String accessToken = accessService.getAccessToken(agentId);
         wxRInfo = workMessageService.sendMessage(accessToken, data);
 
-        if (Constant.TIME_OUT_CODE.equals(wxRInfo.getErrcode().toString())) {
-            String s = accessService.refreshAccessToken(agentId);
-            wxRInfo = workMessageService.sendMessage(s, data);
-        }
         WxWorkRe msgRe = new WxWorkRe();
         if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrcode().toString())) {
             msgRe.flag = true;
@@ -147,10 +127,6 @@ public class MessageServiceImpl implements MessageService {
         String accessToken = accessService.getAccessToken(agentId);
         wxRInfo = workMessageService.sendMessage(accessToken, data);
 
-        if (Constant.TIME_OUT_CODE.equals(wxRInfo.getErrcode().toString())) {
-            String s = accessService.refreshAccessToken(agentId);
-            wxRInfo = workMessageService.sendMessage(s, data);
-        }
         WxWorkRe msgRe = new WxWorkRe();
         if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrcode().toString())) {
             msgRe.flag = true;
@@ -169,10 +145,6 @@ public class MessageServiceImpl implements MessageService {
         String accessToken = accessService.getAccessToken(agentId);
         wxRInfo = workMessageService.sendMessage(accessToken, data);
 
-        if (Constant.TIME_OUT_CODE.equals(wxRInfo.getErrcode().toString())) {
-            String s = accessService.refreshAccessToken(agentId);
-            wxRInfo = workMessageService.sendMessage(s, data);
-        }
         WxWorkRe msgRe = new WxWorkRe();
         if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrcode().toString())) {
             msgRe.flag = true;
@@ -191,10 +163,6 @@ public class MessageServiceImpl implements MessageService {
         String accessToken = accessService.getAccessToken(agentId);
         wxRInfo = workMessageService.sendMessage(accessToken, data);
 
-        if (Constant.TIME_OUT_CODE.equals(wxRInfo.getErrcode().toString())) {
-            String s = accessService.refreshAccessToken(agentId);
-            wxRInfo = workMessageService.sendMessage(s, data);
-        }
         WxWorkRe msgRe = new WxWorkRe();
         if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrcode().toString())) {
             msgRe.flag = true;
@@ -213,10 +181,6 @@ public class MessageServiceImpl implements MessageService {
         String accessToken = accessService.getAccessToken(agentId);
         wxRInfo = workMessageService.sendMessage(accessToken, data);
 
-        if (Constant.TIME_OUT_CODE.equals(wxRInfo.getErrcode().toString())) {
-            String s = accessService.refreshAccessToken(agentId);
-            wxRInfo = workMessageService.sendMessage(s, data);
-        }
         WxWorkRe msgRe = new WxWorkRe();
         if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrcode().toString())) {
             msgRe.flag = true;
@@ -235,10 +199,6 @@ public class MessageServiceImpl implements MessageService {
         String accessToken = accessService.getAccessToken(agentId);
         wxRInfo = workMessageService.sendMessage(accessToken, data);
 
-        if (Constant.TIME_OUT_CODE.equals(wxRInfo.getErrcode().toString())) {
-            String s = accessService.refreshAccessToken(agentId);
-            wxRInfo = workMessageService.sendMessage(s, data);
-        }
         WxWorkRe msgRe = new WxWorkRe();
         if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrcode().toString())) {
             msgRe.flag = true;

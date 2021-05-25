@@ -33,10 +33,7 @@ public class MediaServiceImpl implements MediaService {
         WxMediaInfo wxMediaInfo = null;
         String accessToken = accessService.getAccessToken(agentId);
         wxMediaInfo = uploadData(accessToken, type, filename);
-        if (Constant.TIME_OUT_CODE.equals(wxMediaInfo.getErrcode().toString())) {
-            String s = accessService.refreshAccessToken(agentId);
-            wxMediaInfo = uploadData(s, type, filename);
-        }
+
         WxWorkRe msgRe = new WxWorkRe();
         if (Constant.SUCCESS_CODE.equals(wxMediaInfo.getErrcode().toString())) {
             msgRe.flag = true;
