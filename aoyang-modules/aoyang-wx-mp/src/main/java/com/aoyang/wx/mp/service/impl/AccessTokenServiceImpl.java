@@ -48,13 +48,13 @@ public class AccessTokenServiceImpl implements AccessTokenService {
 
         //2、 远程获取并存入缓存
         final WxAccessToken token = wxMpTokenService.getToken(appId, wxMps.getSecretByAppId(appId));
-        final String access_token = token.getAccess_token();
+        final String access_token = token.getAccessToken();
         if (access_token != null) {
-            redisService.setCacheObject(key, access_token, token.getExpires_in(), TimeUnit.SECONDS);
+            redisService.setCacheObject(key, access_token, token.getExpiresIn(), TimeUnit.SECONDS);
             return access_token;
         }
-        log.error("微信公众号{}获取access_token失败，{}", appId, token.getErrmsg());
-        throw new BaseException("获取access-token失败。" + token.getErrmsg());
+        log.error("微信公众号{}获取access_token失败，{}", appId, token.getErrMsg());
+        throw new BaseException("获取access-token失败。" + token.getErrMsg());
     }
 
     @Override

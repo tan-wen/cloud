@@ -38,14 +38,14 @@ public class MessageServiceImpl implements MessageService {
         wxRInfo = workMessageService.sendMessage(accessToken, data);
 
         WxWorkRe msgRe = new WxWorkRe();
-        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrcode().toString())) {
+        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrCode().toString())) {
             msgRe.flag = true;
         } else {
             msgRe.flag = false;
         }
-        check(msgRe.flag,wxRInfo.getErrmsg());
-        msgRe.code = wxRInfo.getErrcode();
-        msgRe.info = wxRInfo.getErrmsg();
+        check(msgRe.flag,wxRInfo.getErrMsg());
+        msgRe.code = wxRInfo.getErrCode();
+        msgRe.info = wxRInfo.getErrMsg();
         return msgRe;
     }
 
@@ -56,14 +56,14 @@ public class MessageServiceImpl implements MessageService {
         wxRInfo = workMessageService.sendMessage(accessToken, data);
 
         WxWorkRe msgRe = new WxWorkRe();
-        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrcode().toString())) {
+        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrCode().toString())) {
             msgRe.flag = true;
         } else {
             msgRe.flag = false;
         }
-        check(msgRe.flag,wxRInfo.getErrmsg());
-        msgRe.code = wxRInfo.getErrcode();
-        msgRe.info = wxRInfo.getErrmsg();
+        check(msgRe.flag,wxRInfo.getErrMsg());
+        msgRe.code = wxRInfo.getErrCode();
+        msgRe.info = wxRInfo.getErrMsg();
         return msgRe;
     }
 
@@ -74,14 +74,14 @@ public class MessageServiceImpl implements MessageService {
         wxRInfo = workMessageService.sendMessage(accessToken, data);
 
         WxWorkRe msgRe = new WxWorkRe();
-        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrcode().toString())) {
+        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrCode().toString())) {
             msgRe.flag = true;
         } else {
             msgRe.flag = false;
         }
-        check(msgRe.flag,wxRInfo.getErrmsg());
-        msgRe.code = wxRInfo.getErrcode();
-        msgRe.info = wxRInfo.getErrmsg();
+        check(msgRe.flag,wxRInfo.getErrMsg());
+        msgRe.code = wxRInfo.getErrCode();
+        msgRe.info = wxRInfo.getErrMsg();
         return msgRe;
     }
 
@@ -92,14 +92,14 @@ public class MessageServiceImpl implements MessageService {
         wxRInfo = workMessageService.sendMessage(accessToken, data);
 
         WxWorkRe msgRe = new WxWorkRe();
-        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrcode().toString())) {
+        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrCode().toString())) {
             msgRe.flag = true;
         } else {
             msgRe.flag = false;
         }
-        check(msgRe.flag,wxRInfo.getErrmsg());
-        msgRe.code = wxRInfo.getErrcode();
-        msgRe.info = wxRInfo.getErrmsg();
+        check(msgRe.flag,wxRInfo.getErrMsg());
+        msgRe.code = wxRInfo.getErrCode();
+        msgRe.info = wxRInfo.getErrMsg();
         return msgRe;
     }
 
@@ -110,14 +110,14 @@ public class MessageServiceImpl implements MessageService {
         wxRInfo = workMessageService.sendMessage(accessToken, data);
 
         WxWorkRe msgRe = new WxWorkRe();
-        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrcode().toString())) {
+        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrCode().toString())) {
             msgRe.flag = true;
         } else {
             msgRe.flag = false;
         }
-        check(msgRe.flag,wxRInfo.getErrmsg());
-        msgRe.code = wxRInfo.getErrcode();
-        msgRe.info = wxRInfo.getErrmsg();
+        check(msgRe.flag,wxRInfo.getErrMsg());
+        msgRe.code = wxRInfo.getErrCode();
+        msgRe.info = wxRInfo.getErrMsg();
         return msgRe;
     }
 
@@ -128,14 +128,14 @@ public class MessageServiceImpl implements MessageService {
         wxRInfo = workMessageService.sendMessage(accessToken, data);
 
         WxWorkRe msgRe = new WxWorkRe();
-        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrcode().toString())) {
+        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrCode().toString())) {
             msgRe.flag = true;
         } else {
             msgRe.flag = false;
         }
-        check(msgRe.flag,wxRInfo.getErrmsg());
-        msgRe.code = wxRInfo.getErrcode();
-        msgRe.info = wxRInfo.getErrmsg();
+        check(msgRe.flag,wxRInfo.getErrMsg());
+        msgRe.code = wxRInfo.getErrCode();
+        msgRe.info = wxRInfo.getErrMsg();
         return msgRe;
     }
 
@@ -146,14 +146,14 @@ public class MessageServiceImpl implements MessageService {
         wxRInfo = workMessageService.sendMessage(accessToken, data);
 
         WxWorkRe msgRe = new WxWorkRe();
-        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrcode().toString())) {
+        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrCode().toString())) {
             msgRe.flag = true;
         } else {
             msgRe.flag = false;
         }
-        check(msgRe.flag,wxRInfo.getErrmsg());
-        msgRe.code = wxRInfo.getErrcode();
-        msgRe.info = wxRInfo.getErrmsg();
+        check(msgRe.flag,wxRInfo.getErrMsg());
+        msgRe.code = wxRInfo.getErrCode();
+        msgRe.info = wxRInfo.getErrMsg();
         return msgRe;
     }
 
@@ -164,14 +164,14 @@ public class MessageServiceImpl implements MessageService {
         wxRInfo = workMessageService.sendMessage(accessToken, data);
 
         WxWorkRe msgRe = new WxWorkRe();
-        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrcode().toString())) {
+        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrCode().toString())) {
             msgRe.flag = true;
         } else {
             msgRe.flag = false;
         }
-        check(msgRe.flag,wxRInfo.getErrmsg());
-        msgRe.code = wxRInfo.getErrcode();
-        msgRe.info = wxRInfo.getErrmsg();
+        check(msgRe.flag,wxRInfo.getErrMsg());
+        msgRe.code = wxRInfo.getErrCode();
+        msgRe.info = wxRInfo.getErrMsg();
         return msgRe;
     }
 
@@ -182,14 +182,14 @@ public class MessageServiceImpl implements MessageService {
         wxRInfo = workMessageService.sendMessage(accessToken, data);
 
         WxWorkRe msgRe = new WxWorkRe();
-        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrcode().toString())) {
+        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrCode().toString())) {
             msgRe.flag = true;
         } else {
             msgRe.flag = false;
         }
-        check(msgRe.flag,wxRInfo.getErrmsg());
-        msgRe.code = wxRInfo.getErrcode();
-        msgRe.info = wxRInfo.getErrmsg();
+        check(msgRe.flag,wxRInfo.getErrMsg());
+        msgRe.code = wxRInfo.getErrCode();
+        msgRe.info = wxRInfo.getErrMsg();
         return msgRe;
     }
 
@@ -200,14 +200,14 @@ public class MessageServiceImpl implements MessageService {
         wxRInfo = workMessageService.sendMessage(accessToken, data);
 
         WxWorkRe msgRe = new WxWorkRe();
-        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrcode().toString())) {
+        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrCode().toString())) {
             msgRe.flag = true;
         } else {
             msgRe.flag = false;
         }
-        check(msgRe.flag,wxRInfo.getErrmsg());
-        msgRe.code = wxRInfo.getErrcode();
-        msgRe.info = wxRInfo.getErrmsg();
+        check(msgRe.flag,wxRInfo.getErrMsg());
+        msgRe.code = wxRInfo.getErrCode();
+        msgRe.info = wxRInfo.getErrMsg();
         return msgRe;
     }
 

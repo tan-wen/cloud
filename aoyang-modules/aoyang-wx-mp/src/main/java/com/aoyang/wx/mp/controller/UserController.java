@@ -1,10 +1,7 @@
 package com.aoyang.wx.mp.controller;
 
 import com.aoyang.wx.mp.service.UserService;
-import com.ruoyi.common.core.exception.BaseException;
-import com.ruoyi.common.core.utils.StringUtils;
 import com.ruoyi.system.api.domain.SysUser;
-import com.ruoyi.system.api.model.LoginUser;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,13 +23,8 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/{appId}/{code}")
-    public String getUser(@PathVariable("appId") String appId, @PathVariable("code") String code) {
-        String openId = userService.getOpenId(appId, code);
-
-        if (StringUtils.isEmpty(openId)) {
-            throw new BaseException("未正确获取到用户id");
-        }
-        return openId;
+    public SysUser getUser(@PathVariable("appId") String appId, @PathVariable("code") String code) {
+        return userService.getOpenId(appId, code);
     }
 }
 

@@ -1,5 +1,6 @@
 package com.aoyang.wx.mp.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 /**
@@ -20,9 +21,11 @@ import lombok.Data;
 @Data
 public class WxOAuth2Token extends WxAccessToken {
 
-    private String refresh_token;
+    @JsonProperty("refresh_token")
+    private String refreshToken;
 
-    private String openid;
+    @JsonProperty("openid")
+    private String openId;
 
     private String scope;
 }

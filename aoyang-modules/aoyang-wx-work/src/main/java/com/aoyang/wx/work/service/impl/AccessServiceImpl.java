@@ -50,7 +50,7 @@ public class AccessServiceImpl implements AccessService {
         final AccessToken accessToken = wxWorkRemoteService.getAccessToken(
                 wxWork.getAppId(), wxWork.getSecretByAgentId(agentId));
 
-        if (accessToken.getErrcode().equals(0)) {
+        if (accessToken.getErrCode().equals(0)) {
             final String access_token = accessToken.getAccess_token();
             redisService.setCacheObject(key,
                     access_token,
@@ -58,8 +58,8 @@ public class AccessServiceImpl implements AccessService {
                     TimeUnit.SECONDS);
             return access_token;
         }
-        log.error("获取access_token失败，{}", accessToken.getErrmsg());
-        throw new BaseException("获取access-token失败。" + accessToken.getErrmsg());
+        log.error("获取access_token失败，{}", accessToken.getErrMsg());
+        throw new BaseException("获取access-token失败。" + accessToken.getErrMsg());
     }
 
     @Override

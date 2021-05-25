@@ -1,5 +1,6 @@
 package com.aoyang.wx.mp.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 /**
  * @ClassName WxAccessToken
@@ -10,7 +11,9 @@ import lombok.Data;
 @Data
 public class WxAccessToken extends WxR {
 
-    private String access_token;
+    @JsonProperty("access_token")
+    private String accessToken;
 
-    private Long expires_in;
+    @JsonProperty("expires_in")
+    private Long expiresIn;
 }

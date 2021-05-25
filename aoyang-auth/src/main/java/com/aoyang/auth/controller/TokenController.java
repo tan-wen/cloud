@@ -43,8 +43,8 @@ public class TokenController {
         if (wxLogin.hasEmpty()) {
             R.fail("参数不能为空");
         }
-        final String userId = wxWorkUserService.getWorkUser(wxLogin.getAgentId(), wxLogin.getCode());
-        return R.ok(tokenService.createToken(createLoginUser(userId)));
+        final SysUser sysUser= wxWorkUserService.getWorkUser(wxLogin.getAgentId(), wxLogin.getCode());
+        return R.ok(tokenService.createToken(createLoginUser(sysUser)));
     }
 
     // 企业微信小程序登录认证
@@ -53,8 +53,8 @@ public class TokenController {
         if (wxLogin.hasEmpty()) {
             R.fail("参数不能为空");
         }
-        SysUser miniAppUserDetail = wxWorkUserService.getMiniAppUserDetail(wxLogin.getAgentId(), wxLogin.getCode());
-        return R.ok(tokenService.createToken(createLoginUser(miniAppUserDetail)));
+        SysUser sysUser = wxWorkUserService.getMiniAppUser(wxLogin.getAgentId(), wxLogin.getCode());
+        return R.ok(tokenService.createToken(createLoginUser(sysUser)));
     }
 
     // 微信公众号登录认证
@@ -63,21 +63,17 @@ public class TokenController {
         if (wxMpLogin.hasEmpty()) {
             R.fail("参数不能为空");
         }
-        final String openId = wxMpUserService.getUser(wxMpLogin.getAppId(), wxMpLogin.getCode());
-        return R.ok(tokenService.createToken(createLoginUser(openId)));
+        final SysUser sysUser = wxMpUserService.getUser(wxMpLogin.getAppId(), wxMpLogin.getCode());
+        return R.ok(tokenService.createToken(createLoginUser(sysUser)));
     }
 
-    private LoginUser createLoginUser(String userId) {
-        final SysUser sysUser = sysUserService.getOrInsert(userId);
+    /*
+     *  根据sysUser查询sys_user表，并封装LoginUser
+     */
+    private LoginUser createLoginUser(SysUser sysUser) {
+        sysUser = sysUserService.getOrInsert(sysUser);
         LoginUser user = new LoginUser();
         user.setSysUser(sysUser);
-        return user;
-    }
-
-    private LoginUser createLoginUser(SysUser sysUser) {
-        SysUser sysre = sysUserService.getOrInsert(sysUser);
-        LoginUser user = new LoginUser();
-        user.setSysUser(sysre);
         return user;
     }
 

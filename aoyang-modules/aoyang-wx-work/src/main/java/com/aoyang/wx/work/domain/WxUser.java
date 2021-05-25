@@ -1,5 +1,6 @@
 package com.aoyang.wx.work.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 /**
@@ -9,12 +10,13 @@ import lombok.Data;
  * @Date: 2021-05-19 16:05
  */
 @Data
-public class UserDetail extends WxR {
+public class WxUser extends WxR {
 
     /**
      * 成员UserID 关联user表该字段
      */
-    private String userid;
+    @JsonProperty("userid")
+    private String userId;
 
     /**
      * 姓名
@@ -37,7 +39,7 @@ public class UserDetail extends WxR {
     private String position;
 
     /**
-     * 性别
+     * 性别 0表示未定义，1表示男性，2表示女性
      */
     private String gender;
 

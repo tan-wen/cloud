@@ -25,7 +25,7 @@ import lombok.Data;
  * @Date 2021/5/17 4:53 下午
  **/
 @Data
-public class UserInfo extends WxR {
+public class WxUserId extends WxR {
 
     @JsonProperty("UserId")
     private String userId;

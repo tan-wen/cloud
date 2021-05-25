@@ -24,12 +24,15 @@ import lombok.Data;
  * @Date 2021/5/18 11:23 上午
  **/
 @Data
-public class MinAppUser extends WxR {
+public class MinAppUserId extends WxR {
 
-    private String corpid;
+    @JsonProperty("corpid")
+    private String corpId;
 
-    private String userid;
+    @JsonProperty("userid")
+    private String userId;
 
-    private String session_key;
+    @JsonProperty("session_key")
+    private String sessionKey;
 
 }

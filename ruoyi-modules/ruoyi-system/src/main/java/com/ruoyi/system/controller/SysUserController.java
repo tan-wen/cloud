@@ -247,30 +247,17 @@ public class SysUserController extends BaseController
         return toAjax(userService.updateUserStatus(user));
     }
 
-    @PostMapping("/getOrInsert/{username}")
-    public SysUser getOrInsert(@PathVariable String username) {
-        SysUser sysUser = userService.selectUserByUserName(username);
-        if (sysUser == null) {
-            sysUser = new SysUser();
-            sysUser.setUserName(username);
-            userService.insertUser(sysUser);
-        }
-        return sysUser;
-    }
-
     @PostMapping("/getOrInsert")
     public SysUser getOrInsert(@RequestBody SysUser user) {
-        if (UserConstants.UNIQUE.equals(userService.checkUserNameUnique(user.getUserName()))
-        && UserConstants.UNIQUE.equals(userService.checkPhoneUnique(user))
-        && UserConstants.UNIQUE.equals(userService.checkEmailUnique(user))
-        ){
-            user.setCreateBy("小程序端");
+        final String userName = user.getUserName();
+        //用户不存在时
+        if (UserConstants.UNIQUE.equals(userService.checkUserNameUnique(userName))) {
+            user.setCreateBy(userName);
             user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
             userService.insertUser(user);
             return user;
-        }else {
-            return userService.selectUserByUserName(user.getUserName());
         }
+        return userService.selectUserByUserName(userName);
     }
 
 }

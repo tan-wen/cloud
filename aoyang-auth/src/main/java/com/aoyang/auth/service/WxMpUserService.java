@@ -1,7 +1,7 @@
 package com.aoyang.auth.service;
 
 import com.ruoyi.common.core.constant.ServiceNameConstants;
-import com.ruoyi.system.api.model.LoginUser;
+import com.ruoyi.system.api.domain.SysUser;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,5 +16,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface WxMpUserService {
 
     @GetMapping("/wx/mp/user/{appId}/{code}")
-    String getUser(@PathVariable("appId") String appId, @PathVariable("code")String code);
+    SysUser getUser(@PathVariable("appId") String appId, @PathVariable("code")String code);
 }

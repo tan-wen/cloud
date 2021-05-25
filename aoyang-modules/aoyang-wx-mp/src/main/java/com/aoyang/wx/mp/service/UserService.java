@@ -1,5 +1,7 @@
 package com.aoyang.wx.mp.service;
 
+import com.ruoyi.system.api.domain.SysUser;
+
 /**
  * @ClassName UserService
  * @description: 微信公众号用户接口
@@ -9,5 +11,5 @@ package com.aoyang.wx.mp.service;
 public interface UserService {
 
 
-    String getOpenId(String appId, String code);
+    SysUser getOpenId(String appId, String code);
 }

@@ -1,9 +1,9 @@
 package com.aoyang.wx.work.service.remote;
 
 import com.aoyang.wx.work.domain.AccessToken;
-import com.aoyang.wx.work.domain.MinAppUser;
-import com.aoyang.wx.work.domain.UserDetail;
-import com.aoyang.wx.work.domain.UserInfo;
+import com.aoyang.wx.work.domain.MinAppUserId;
+import com.aoyang.wx.work.domain.WxUser;
+import com.aoyang.wx.work.domain.WxUserId;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,16 +23,16 @@ public interface WxWorkService {
                                @RequestParam(name = "corpsecret") String secret);
 
     @GetMapping("/user/getuserinfo")
-    UserInfo getUserId(@RequestParam(name = "access_token") String accessToken,
+    WxUserId getUserId(@RequestParam(name = "access_token") String accessToken,
                        @RequestParam(name = "code") String code);
 
     @GetMapping("/miniprogram/jscode2session?grant_type=authorization_code")
-    MinAppUser getMinAppUserId(@RequestParam(name = "access_token")String accessToken,
-                               @RequestParam(name = "js_code") String code);
+    MinAppUserId getMinAppUserId(@RequestParam(name = "access_token")String accessToken,
+                                 @RequestParam(name = "js_code") String code);
 
     @GetMapping("/user/get")
-    UserDetail getUserDetail(@RequestParam(name = "access_token")String accessToken,
-                               @RequestParam(name="userid")String userId);
+    WxUser getUser(@RequestParam(name = "access_token")String accessToken,
+                   @RequestParam(name="userid")String userId);
 
 
 }

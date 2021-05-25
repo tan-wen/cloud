@@ -35,14 +35,14 @@ public class MediaServiceImpl implements MediaService {
         wxMediaInfo = uploadData(accessToken, type, filename);
 
         WxWorkRe msgRe = new WxWorkRe();
-        if (Constant.SUCCESS_CODE.equals(wxMediaInfo.getErrcode().toString())) {
+        if (Constant.SUCCESS_CODE.equals(wxMediaInfo.getErrCode().toString())) {
             msgRe.flag = true;
         } else {
             msgRe.flag = false;
         }
-        check(msgRe.flag,wxMediaInfo.getErrmsg());
-        msgRe.code = wxMediaInfo.getErrcode();
-        msgRe.info = wxMediaInfo.getErrmsg();
+        check(msgRe.flag,wxMediaInfo.getErrMsg());
+        msgRe.code = wxMediaInfo.getErrCode();
+        msgRe.info = wxMediaInfo.getErrMsg();
         return msgRe;
 
     }
