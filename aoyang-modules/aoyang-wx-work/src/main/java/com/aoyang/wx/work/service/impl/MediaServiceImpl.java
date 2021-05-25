@@ -2,11 +2,12 @@ package com.aoyang.wx.work.service.impl;
 
 import com.aoyang.wx.work.config.Constant;
 import com.aoyang.wx.work.domain.WxMediaInfo;
-import com.aoyang.wx.work.model.FlagEnum;
 import com.aoyang.wx.work.model.WxWorkRe;
 import com.aoyang.wx.work.service.AccessService;
 import com.aoyang.wx.work.service.MediaService;
 import com.aoyang.wx.work.service.remote.WxWorkMediaService;
+import com.ruoyi.common.core.exception.BaseException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +20,7 @@ import javax.annotation.Resource;
  * @Date: 2021-05-20 09:43
  */
 @Service
+@Slf4j
 public class MediaServiceImpl implements MediaService {
 
     @Resource
@@ -37,10 +39,11 @@ public class MediaServiceImpl implements MediaService {
         }
         WxWorkRe msgRe = new WxWorkRe();
         if (Constant.SUCCESS_CODE.equals(wxMediaInfo.getErrcode().toString())) {
-            msgRe.flag = FlagEnum.SUCCESS.getCode();
+            msgRe.flag = true;
         } else {
-            msgRe.flag = FlagEnum.FAIL.getCode();
+            msgRe.flag = false;
         }
+        check(msgRe.flag,wxMediaInfo.getErrmsg());
         msgRe.code = wxMediaInfo.getErrcode();
         msgRe.info = wxMediaInfo.getErrmsg();
         return msgRe;
@@ -49,5 +52,12 @@ public class MediaServiceImpl implements MediaService {
 
     private WxMediaInfo uploadData(String accessToken, String type, MultipartFile filename) {
         return workMediaService.upload(accessToken, type, filename);
+    }
+
+    private void check(Boolean flag,String msg){
+        if(!flag){
+            log.error("未能正确获取微信返回，{}", msg);
+            throw new BaseException("未能正确获取微信返回," + msg);
+        }
     }
 }

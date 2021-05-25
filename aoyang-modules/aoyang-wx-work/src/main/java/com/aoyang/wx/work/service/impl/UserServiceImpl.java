@@ -4,7 +4,6 @@ import com.aoyang.wx.work.config.Constant;
 import com.aoyang.wx.work.domain.MinAppUser;
 import com.aoyang.wx.work.domain.UserDetail;
 import com.aoyang.wx.work.domain.UserInfo;
-import com.aoyang.wx.work.model.FlagEnum;
 import com.aoyang.wx.work.model.WxWorkRe;
 import com.aoyang.wx.work.service.AccessService;
 import com.aoyang.wx.work.service.UserService;
@@ -72,10 +71,12 @@ public class UserServiceImpl  implements UserService  {
         }
         WxWorkRe msgRe = new WxWorkRe();
         if (Constant.SUCCESS_CODE.equals(userDetail.getErrcode().toString())) {
-            msgRe.flag = FlagEnum.SUCCESS.getCode();
+            msgRe.flag = true;
         } else {
-            msgRe.flag = FlagEnum.FAIL.getCode();
+            msgRe.flag = false;
         }
+        check(msgRe.flag,userDetail.getErrmsg());
+
         msgRe.code = userDetail.getErrcode();
         msgRe.info = userDetail.getErrmsg();
         msgRe.data = userDetail;
@@ -87,7 +88,7 @@ public class UserServiceImpl  implements UserService  {
         String userId = getMiniAppUser(agentId, code);
         WxWorkRe workRe = getuserDetail(agentId, userId);
         UserDetail data = (UserDetail) workRe.getData();
-        if(!FlagEnum.SUCCESS.getCode().equals(workRe.flag)|| StringUtils.isEmpty(data.getName())){
+        if(!workRe.flag|| StringUtils.isEmpty(data.getName())){
             log.error("用户详情获取失败或未获取到用户姓名，{}", workRe.getInfo());
             throw new BaseException("用户详情获取失败或未获取到用户姓名  ," + workRe.getInfo());
         }
@@ -112,5 +113,11 @@ public class UserServiceImpl  implements UserService  {
         return sysUser;
     }
 
+    private void check(Boolean flag,String msg){
+        if(!flag){
+            log.error("未能正确获取微信返回，{}", msg);
+            throw new BaseException("未能正确获取微信返回," + msg);
+        }
+    }
 
 }

@@ -1,6 +1,5 @@
 package com.aoyang.bis.common.utils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.util.Assert;
  
 import java.lang.reflect.Field;
