@@ -1,6 +1,7 @@
 package com.ruoyi.file.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import com.ruoyi.file.config.MinioConfig;
@@ -13,6 +14,7 @@ import io.minio.PutObjectArgs;
  * 
  * @author ruoyi
  */
+@Primary
 @Service
 public class MinioSysFileServiceImpl implements ISysFileService
 {
