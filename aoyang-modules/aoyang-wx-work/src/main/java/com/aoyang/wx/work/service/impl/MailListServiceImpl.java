@@ -38,7 +38,7 @@ public class MailListServiceImpl implements MailListService {
     }
 
     private void check(Integer code, String msg){
-        if(Constant.SUCCESS_CODE.equals(code)){
+        if(!Constant.SUCCESS_CODE.equals(code)){
             log.error("未能正确获取微信返回，{}", msg);
             throw new BaseException("未能正确获取微信返回," + msg);
         }
