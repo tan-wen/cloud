@@ -2,7 +2,6 @@ package com.aoyang.wx.work.service.impl;
 
 import com.aoyang.wx.work.config.Constant;
 import com.aoyang.wx.work.domain.WxRInfo;
-import com.aoyang.wx.work.model.WxWorkRe;
 import com.aoyang.wx.work.model.info.applets.AppletsInfo;
 import com.aoyang.wx.work.model.info.file.FileInfo;
 import com.aoyang.wx.work.model.info.image.ImageInfo;
@@ -32,191 +31,90 @@ public class MessageServiceImpl implements MessageService {
     private AccessService accessService;
 
     @Override
-    public WxWorkRe sendMessage(String agentId, AppletsInfo data) {
-        WxRInfo wxRInfo = null;
+    public Boolean sendMessage(String agentId, AppletsInfo data) {
         String accessToken = accessService.getAccessToken(agentId);
-        wxRInfo = workMessageService.sendMessage(accessToken, data);
-
-        WxWorkRe msgRe = new WxWorkRe();
-        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrCode().toString())) {
-            msgRe.flag = true;
-        } else {
-            msgRe.flag = false;
-        }
-        check(msgRe.flag,wxRInfo.getErrMsg());
-        msgRe.code = wxRInfo.getErrCode();
-        msgRe.info = wxRInfo.getErrMsg();
-        return msgRe;
+        WxRInfo wxRInfo  = workMessageService.sendMessage(accessToken, data);
+        check(wxRInfo.getErrCode(),wxRInfo.getErrMsg());
+        return true;
     }
 
     @Override
-    public WxWorkRe sendMessage(String agentId, TextInfo data) {
-        WxRInfo wxRInfo = null;
+    public Boolean sendMessage(String agentId, TextInfo data) {
         String accessToken = accessService.getAccessToken(agentId);
-        wxRInfo = workMessageService.sendMessage(accessToken, data);
-
-        WxWorkRe msgRe = new WxWorkRe();
-        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrCode().toString())) {
-            msgRe.flag = true;
-        } else {
-            msgRe.flag = false;
-        }
-        check(msgRe.flag,wxRInfo.getErrMsg());
-        msgRe.code = wxRInfo.getErrCode();
-        msgRe.info = wxRInfo.getErrMsg();
-        return msgRe;
+        WxRInfo wxRInfo  = workMessageService.sendMessage(accessToken, data);
+        check(wxRInfo.getErrCode(),wxRInfo.getErrMsg());
+        return true;
     }
 
     @Override
-    public WxWorkRe sendMessage(String agentId, ImageInfo data) {
-        WxRInfo wxRInfo = null;
+    public Boolean sendMessage(String agentId, ImageInfo data) {
         String accessToken = accessService.getAccessToken(agentId);
-        wxRInfo = workMessageService.sendMessage(accessToken, data);
-
-        WxWorkRe msgRe = new WxWorkRe();
-        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrCode().toString())) {
-            msgRe.flag = true;
-        } else {
-            msgRe.flag = false;
-        }
-        check(msgRe.flag,wxRInfo.getErrMsg());
-        msgRe.code = wxRInfo.getErrCode();
-        msgRe.info = wxRInfo.getErrMsg();
-        return msgRe;
+        WxRInfo wxRInfo  = workMessageService.sendMessage(accessToken, data);
+        check(wxRInfo.getErrCode(),wxRInfo.getErrMsg());
+        return true;
     }
 
     @Override
-    public WxWorkRe sendMessage(String agentId, VoiceInfo data) {
-        WxRInfo wxRInfo = null;
+    public Boolean sendMessage(String agentId, VoiceInfo data) {
         String accessToken = accessService.getAccessToken(agentId);
-        wxRInfo = workMessageService.sendMessage(accessToken, data);
-
-        WxWorkRe msgRe = new WxWorkRe();
-        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrCode().toString())) {
-            msgRe.flag = true;
-        } else {
-            msgRe.flag = false;
-        }
-        check(msgRe.flag,wxRInfo.getErrMsg());
-        msgRe.code = wxRInfo.getErrCode();
-        msgRe.info = wxRInfo.getErrMsg();
-        return msgRe;
+        WxRInfo wxRInfo  = workMessageService.sendMessage(accessToken, data);
+        check(wxRInfo.getErrCode(),wxRInfo.getErrMsg());
+        return true;
     }
 
     @Override
-    public WxWorkRe sendMessage(String agentId, VideoInfo data) {
-        WxRInfo wxRInfo = null;
+    public Boolean sendMessage(String agentId, VideoInfo data) {
         String accessToken = accessService.getAccessToken(agentId);
-        wxRInfo = workMessageService.sendMessage(accessToken, data);
-
-        WxWorkRe msgRe = new WxWorkRe();
-        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrCode().toString())) {
-            msgRe.flag = true;
-        } else {
-            msgRe.flag = false;
-        }
-        check(msgRe.flag,wxRInfo.getErrMsg());
-        msgRe.code = wxRInfo.getErrCode();
-        msgRe.info = wxRInfo.getErrMsg();
-        return msgRe;
+        WxRInfo wxRInfo  = workMessageService.sendMessage(accessToken, data);
+        check(wxRInfo.getErrCode(),wxRInfo.getErrMsg());
+        return true;
     }
 
     @Override
-    public WxWorkRe sendMessage(String agentId, FileInfo data) {
-        WxRInfo wxRInfo = null;
+    public Boolean sendMessage(String agentId, FileInfo data) {
         String accessToken = accessService.getAccessToken(agentId);
-        wxRInfo = workMessageService.sendMessage(accessToken, data);
-
-        WxWorkRe msgRe = new WxWorkRe();
-        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrCode().toString())) {
-            msgRe.flag = true;
-        } else {
-            msgRe.flag = false;
-        }
-        check(msgRe.flag,wxRInfo.getErrMsg());
-        msgRe.code = wxRInfo.getErrCode();
-        msgRe.info = wxRInfo.getErrMsg();
-        return msgRe;
+        WxRInfo wxRInfo  = workMessageService.sendMessage(accessToken, data);
+        check(wxRInfo.getErrCode(),wxRInfo.getErrMsg());
+        return true;
     }
 
     @Override
-    public WxWorkRe sendMessage(String agentId, TextCardInfo data) {
-        WxRInfo wxRInfo = null;
+    public Boolean sendMessage(String agentId, TextCardInfo data) {
         String accessToken = accessService.getAccessToken(agentId);
-        wxRInfo = workMessageService.sendMessage(accessToken, data);
-
-        WxWorkRe msgRe = new WxWorkRe();
-        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrCode().toString())) {
-            msgRe.flag = true;
-        } else {
-            msgRe.flag = false;
-        }
-        check(msgRe.flag,wxRInfo.getErrMsg());
-        msgRe.code = wxRInfo.getErrCode();
-        msgRe.info = wxRInfo.getErrMsg();
-        return msgRe;
+        WxRInfo wxRInfo  = workMessageService.sendMessage(accessToken, data);
+        check(wxRInfo.getErrCode(),wxRInfo.getErrMsg());
+        return true;
     }
 
     @Override
-    public WxWorkRe sendMessage(String agentId, NewsInfo data) {
-        WxRInfo wxRInfo = null;
+    public Boolean sendMessage(String agentId, NewsInfo data) {
         String accessToken = accessService.getAccessToken(agentId);
-        wxRInfo = workMessageService.sendMessage(accessToken, data);
-
-        WxWorkRe msgRe = new WxWorkRe();
-        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrCode().toString())) {
-            msgRe.flag = true;
-        } else {
-            msgRe.flag = false;
-        }
-        check(msgRe.flag,wxRInfo.getErrMsg());
-        msgRe.code = wxRInfo.getErrCode();
-        msgRe.info = wxRInfo.getErrMsg();
-        return msgRe;
+        WxRInfo wxRInfo  = workMessageService.sendMessage(accessToken, data);
+        check(wxRInfo.getErrCode(),wxRInfo.getErrMsg());
+        return true;
     }
 
     @Override
-    public WxWorkRe sendMessage(String agentId, MarkDownInfo data) {
-        WxRInfo wxRInfo = null;
+    public Boolean sendMessage(String agentId, MarkDownInfo data) {
         String accessToken = accessService.getAccessToken(agentId);
-        wxRInfo = workMessageService.sendMessage(accessToken, data);
-
-        WxWorkRe msgRe = new WxWorkRe();
-        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrCode().toString())) {
-            msgRe.flag = true;
-        } else {
-            msgRe.flag = false;
-        }
-        check(msgRe.flag,wxRInfo.getErrMsg());
-        msgRe.code = wxRInfo.getErrCode();
-        msgRe.info = wxRInfo.getErrMsg();
-        return msgRe;
+        WxRInfo wxRInfo  = workMessageService.sendMessage(accessToken, data);
+        check(wxRInfo.getErrCode(),wxRInfo.getErrMsg());
+        return true;
     }
 
     @Override
-    public WxWorkRe sendMessage(String agentId, InteractiveTaskcardInfo data) {
-        WxRInfo wxRInfo = null;
+    public Boolean sendMessage(String agentId, InteractiveTaskcardInfo data) {
         String accessToken = accessService.getAccessToken(agentId);
-        wxRInfo = workMessageService.sendMessage(accessToken, data);
-
-        WxWorkRe msgRe = new WxWorkRe();
-        if (Constant.SUCCESS_CODE.equals(wxRInfo.getErrCode().toString())) {
-            msgRe.flag = true;
-        } else {
-            msgRe.flag = false;
-        }
-        check(msgRe.flag,wxRInfo.getErrMsg());
-        msgRe.code = wxRInfo.getErrCode();
-        msgRe.info = wxRInfo.getErrMsg();
-        return msgRe;
+        WxRInfo wxRInfo  = workMessageService.sendMessage(accessToken, data);
+        check(wxRInfo.getErrCode(),wxRInfo.getErrMsg());
+        return true;
     }
 
-    private void check(Boolean flag,String msg){
-        if(!flag){
+    private void check(Integer code, String msg){
+        if(Constant.SUCCESS_CODE.equals(code)){
             log.error("未能正确获取微信返回，{}", msg);
             throw new BaseException("未能正确获取微信返回," + msg);
         }
     }
-
-
+    
 }

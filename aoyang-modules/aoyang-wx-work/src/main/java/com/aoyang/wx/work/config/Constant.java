@@ -8,9 +8,9 @@ package com.aoyang.wx.work.config;
  */
 public class Constant {
 
-    public final static String SUCCESS_CODE = "0";
+    public final static Integer SUCCESS_CODE = 0;
 
-    public final static String TIME_OUT_CODE = "40001";
+    public final static Integer TIME_OUT_CODE = 40001;
 
     public final static String REINFO = "已调用";
 

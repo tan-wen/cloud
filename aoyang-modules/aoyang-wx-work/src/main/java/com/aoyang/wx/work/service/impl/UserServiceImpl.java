@@ -37,7 +37,6 @@ public class UserServiceImpl implements UserService {
         final String accessToken = wxAccessService.getAccessToken(agentId);
 
         //获取用户id
-
         final WxUserId wxUserId = wxWorkService.getUserId(accessToken, code);
 
         //内部员工

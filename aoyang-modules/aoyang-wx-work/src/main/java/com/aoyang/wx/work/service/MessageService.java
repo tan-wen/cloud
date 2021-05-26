@@ -1,6 +1,5 @@
 package com.aoyang.wx.work.service;
 
-import com.aoyang.wx.work.model.WxWorkRe;
 import com.aoyang.wx.work.model.info.applets.AppletsInfo;
 import com.aoyang.wx.work.model.info.file.FileInfo;
 import com.aoyang.wx.work.model.info.image.ImageInfo;
@@ -13,23 +12,23 @@ import com.aoyang.wx.work.model.info.video.VideoInfo;
 import com.aoyang.wx.work.model.info.voice.VoiceInfo;
 
 public interface MessageService {
-    WxWorkRe sendMessage(String agentId, AppletsInfo data);
+    Boolean sendMessage(String agentId, AppletsInfo data);
 
-    WxWorkRe sendMessage(String agentId, TextInfo data);
+    Boolean sendMessage(String agentId, TextInfo data);
 
-    WxWorkRe sendMessage(String agentId, ImageInfo data);
+    Boolean sendMessage(String agentId, ImageInfo data);
 
-    WxWorkRe sendMessage(String agentId, VoiceInfo data);
+    Boolean sendMessage(String agentId, VoiceInfo data);
 
-    WxWorkRe sendMessage(String agentId, VideoInfo data);
+    Boolean sendMessage(String agentId, VideoInfo data);
 
-    WxWorkRe sendMessage(String agentId, FileInfo data);
+    Boolean sendMessage(String agentId, FileInfo data);
 
-    WxWorkRe sendMessage(String agentId, TextCardInfo data);
+    Boolean sendMessage(String agentId, TextCardInfo data);
 
-    WxWorkRe sendMessage(String agentId, NewsInfo data);
+    Boolean sendMessage(String agentId, NewsInfo data);
 
-    WxWorkRe sendMessage(String agentId, MarkDownInfo data);
+    Boolean sendMessage(String agentId, MarkDownInfo data);
 
-    WxWorkRe sendMessage(String agentId, InteractiveTaskcardInfo data);
+    Boolean sendMessage(String agentId, InteractiveTaskcardInfo data);
 }

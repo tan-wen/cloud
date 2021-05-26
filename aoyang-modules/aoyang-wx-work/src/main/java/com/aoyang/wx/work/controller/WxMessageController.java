@@ -1,6 +1,6 @@
 package com.aoyang.wx.work.controller;
 
-import com.aoyang.wx.work.model.WxWorkRe;
+
 import com.aoyang.wx.work.model.info.applets.AppletsInfo;
 import com.aoyang.wx.work.model.info.file.FileInfo;
 import com.aoyang.wx.work.model.info.image.ImageInfo;
@@ -41,52 +41,52 @@ public class WxMessageController {
      * @return
      */
     @PostMapping("/app/{agentId}")
-    public WxWorkRe sendMessage(@PathVariable String agentId, @RequestBody AppletsInfo data) {
+    public Boolean sendMessage(@PathVariable String agentId, @RequestBody AppletsInfo data) {
         return messageService.sendMessage(agentId, data);
     }
 
     @PostMapping("/text/{agentId}")
-    public WxWorkRe sendMessage(@PathVariable String agentId, @RequestBody TextInfo data) {
+    public Boolean sendMessage(@PathVariable String agentId, @RequestBody TextInfo data) {
         return messageService.sendMessage(agentId, data);
     }
 
     @PostMapping("/image/{agentId}")
-    public WxWorkRe sendMessage(@PathVariable String agentId, @RequestBody ImageInfo data) {
+    public Boolean sendMessage(@PathVariable String agentId, @RequestBody ImageInfo data) {
         return messageService.sendMessage(agentId, data);
     }
 
     @PostMapping("/voice/{agentId}")
-    public WxWorkRe sendMessage(@PathVariable String agentId, @RequestBody VoiceInfo data) {
+    public Boolean sendMessage(@PathVariable String agentId, @RequestBody VoiceInfo data) {
         return messageService.sendMessage(agentId, data);
     }
 
     @PostMapping("/video/{agentId}")
-    public WxWorkRe sendMessage(@PathVariable String agentId, @RequestBody VideoInfo data) {
+    public Boolean sendMessage(@PathVariable String agentId, @RequestBody VideoInfo data) {
         return messageService.sendMessage(agentId, data);
     }
 
     @PostMapping("/file/{agentId}")
-    public WxWorkRe sendMessage(@PathVariable String agentId, @RequestBody FileInfo data) {
+    public Boolean sendMessage(@PathVariable String agentId, @RequestBody FileInfo data) {
         return messageService.sendMessage(agentId, data);
     }
 
     @PostMapping("/textcard/{agentId}")
-    public WxWorkRe sendMessage(@PathVariable String agentId, @RequestBody TextCardInfo data) {
+    public Boolean sendMessage(@PathVariable String agentId, @RequestBody TextCardInfo data) {
         return messageService.sendMessage(agentId, data);
     }
 
     @PostMapping("/news/{agentId}")
-    public WxWorkRe sendMessage(@PathVariable String agentId, @RequestBody NewsInfo data) {
+    public Boolean sendMessage(@PathVariable String agentId, @RequestBody NewsInfo data) {
         return messageService.sendMessage(agentId, data);
     }
 
     @PostMapping("/markdown/{agentId}")
-    public WxWorkRe sendMessage(@PathVariable String agentId, @RequestBody MarkDownInfo data) {
+    public Boolean sendMessage(@PathVariable String agentId, @RequestBody MarkDownInfo data) {
         return messageService.sendMessage(agentId, data);
     }
 
     @PostMapping("/interactivetaskcard/{agentId}")
-    public WxWorkRe sendMessage(@PathVariable String agentId, @RequestBody InteractiveTaskcardInfo data) {
+    public Boolean sendMessage(@PathVariable String agentId, @RequestBody InteractiveTaskcardInfo data) {
         return messageService.sendMessage(agentId, data);
     }
 

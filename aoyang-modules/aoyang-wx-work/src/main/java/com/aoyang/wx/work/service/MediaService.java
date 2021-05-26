@@ -1,8 +1,9 @@
 package com.aoyang.wx.work.service;
 
-import com.aoyang.wx.work.model.WxWorkRe;
+
+import com.aoyang.wx.work.model.MediaInfo;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface MediaService {
-    WxWorkRe upload(String agentId, String type, MultipartFile filename);
+    MediaInfo upload(String agentId, String type, MultipartFile filename);
 }

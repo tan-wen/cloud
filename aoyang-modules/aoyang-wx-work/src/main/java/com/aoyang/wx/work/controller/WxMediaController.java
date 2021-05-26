@@ -1,6 +1,6 @@
 package com.aoyang.wx.work.controller;
 
-import com.aoyang.wx.work.model.WxWorkRe;
+import com.aoyang.wx.work.model.MediaInfo;
 import com.aoyang.wx.work.service.MediaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.annotation.Resource;
 
 /**
@@ -26,9 +25,8 @@ public class WxMediaController {
     @Resource
     private MediaService mediaService;
 
-
     @PostMapping("/upload/{agentId}/{type}")
-    public WxWorkRe upload(@PathVariable String agentId, @PathVariable String type, MultipartFile filename) {
+    public MediaInfo upload(@PathVariable String agentId, @PathVariable String type, MultipartFile filename) {
         return mediaService.upload(agentId, type, filename);
     }
 
