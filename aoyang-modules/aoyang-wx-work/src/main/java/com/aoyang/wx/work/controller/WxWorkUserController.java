@@ -1,6 +1,7 @@
 package com.aoyang.wx.work.controller;
 
 import com.aoyang.wx.work.service.UserService;
+import com.aoyang.wx.work.service.remote.WxWorkService;
 import com.ruoyi.system.api.domain.SysUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,7 @@ public class WxWorkUserController {
     @Resource
     private UserService wxWorkUserService;
 
+
     @GetMapping("/work/user/{agentId}/{code}")
     public SysUser getUser(@PathVariable String agentId, @PathVariable String code) {
         return wxWorkUserService.getUser(agentId, code);
@@ -33,5 +35,7 @@ public class WxWorkUserController {
     public SysUser getMiniAppUser(@PathVariable String agentId, @PathVariable String code) {
         return wxWorkUserService.getMiniAppUser(agentId, code);
     }
+
+
 
 }

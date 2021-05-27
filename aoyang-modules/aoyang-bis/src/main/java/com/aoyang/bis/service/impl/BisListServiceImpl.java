@@ -2,28 +2,35 @@ package com.aoyang.bis.service.impl;
 
 import com.aoyang.bis.common.Result;
 import com.aoyang.bis.common.utils.LocalDateTimeUtil;
-import com.aoyang.bis.common.utils.MyStringUtils;
+import com.aoyang.bis.common.wxapi.WxSystemApi;
 import com.aoyang.bis.common.wxapi.WxWorkApi;
 import com.aoyang.bis.domain.*;
-import com.aoyang.bis.dto.*;
+import com.aoyang.bis.dto.BisListAddDto;
+import com.aoyang.bis.dto.CreatePersonList;
 import com.aoyang.bis.mapper.BisListMapper;
-import com.aoyang.bis.mapper.UserMapper;
 import com.aoyang.bis.service.BisDetailService;
+import com.aoyang.bis.service.BisListFileService;
 import com.aoyang.bis.service.BisListService;
-import com.aoyang.bis.service.UserDetailService;
 import com.aoyang.bis.service.UserOperationService;
-import com.aoyang.wx.work.model.WxWorkRe;
+import com.aoyang.wx.work.model.TagMember;
+import com.aoyang.wx.work.model.WxUserInfo;
 import com.aoyang.wx.work.model.info.applets.AppletsInfo;
 import com.aoyang.wx.work.model.info.applets.ContentItem;
 import com.aoyang.wx.work.model.info.applets.MiniprogramNotice;
+import com.aoyang.wx.work.utils.targetStringUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.utils.SecurityUtils;
+import com.ruoyi.system.api.domain.SysUser;
+import com.ruoyi.system.api.model.LoginUser;
 import org.apache.commons.lang3.StringUtils;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -50,21 +57,23 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
     @Autowired
     private UserOperationService userOperationService;
     @Autowired
+    private BisListFileService bisListFileService;
+    @Autowired
     private WxWorkApi wxWorkApi;
     @Autowired
-    private UserMapper userMapper;
-    @Autowired
-    private UserDetailService userDetailService;
+    private WxSystemApi wxSystemApi;
     @Value("${agentId}")
     private String agentId;
-    @Value("${appid}")
-    private String appid;
+    @Value("${appId}")
+    private String appId;
+    @Value("${tagId}")
+    private String tagId;
 
 
 
     @Override
     public Result<?> findAll(String state, String submitterId, LocalDateTime createTime, String classification, String secondaryClassification) throws ParseException {
-        return Result.ok(this.getAllinfo(state,submitterId,createTime,classification,secondaryClassification));
+        return Result.ok(this.getAllinfo(state, submitterId, createTime, classification, secondaryClassification));
     }
 
     @Override
@@ -120,14 +129,25 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
     @Transactional(rollbackFor = Exception.class)
     public Result<?> addBis(BisListAddDto bisListAddDto) {
         String id = UUID.randomUUID().toString().replace("-", "");
-        BisList bisList = this.buildBisList(id,bisListAddDto);
-        BisDetail bisDetail = this.buildBisDetail(id,bisListAddDto);
+        String detailid = UUID.randomUUID().toString().replace("-", "");
+        BisList bisList = this.buildBisList(id, bisListAddDto);
+        BisDetail bisDetail = this.buildBisDetail(id, detailid,bisListAddDto);
+        List<BisListFile> bisListFiles = buildFileList(bisListAddDto.getPictureids(), detailid);
+        bisListFileService.saveBatch(bisListFiles);
         this.save(bisList);
         bisDetailService.save(bisDetail);
 
-        UserDetail userDetail = userDetailService.findByUserId(SecurityUtils.getUsername());
+        SysUser usreInfo = wxSystemApi.findUsreInfo(SecurityUtils.getUsername());
+
+        TagMember tagMember = wxWorkApi.findTagMember(agentId, tagId);
+        List<WxUserInfo> userList = tagMember.getUserlist();
+
+        //此处的userId为微信传回来的工号。
+        List<String> useridlist = userList.stream().map(e -> e.getUserId()).collect(Collectors.toList());
+        String s = targetStringUtil.buildTarget(useridlist);
+
         //推送消息
-        send("【"+bisList.getTitle()+"】",  SecurityUtils.getUsername(),"提出人：",userDetail.getName(),id);
+        send("【" + bisList.getTitle() + "】", s, "提出人：", usreInfo.getNickName(), id);
         return Result.ok("添加成功");
 
     }
@@ -159,17 +179,17 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
     @Transactional(rollbackFor = Exception.class)
     public Result<?> claimBis(String id) {
         BisList bisList = this.getById(id);
-        if(!StatusEnum.UNPROCESSED.getCode().equals(bisList.getState())){
-            return Result.error(200,"认领失败，状态已变更，或已被他人操作");
+        if (!StatusEnum.UNPROCESSED.getCode().equals(bisList.getState())) {
+            return Result.error(200, "认领失败，状态已变更，或已被他人操作");
         }
         QueryWrapper<BisDetail> wrapper = new QueryWrapper<>();
-        wrapper.eq("pid",id);
+        wrapper.eq("pid", id);
         BisDetail bisDetail = bisDetailService.getOne(wrapper);
         bisList.setState(StatusEnum.CLAIMED.getCode());
         bisDetail.setAssignedTime(LocalDateTime.now());//指派和认领时间一致
-        UserDetail userDetail = userDetailService.findByUserId(SecurityUtils.getUsername());
-        bisDetail.setChargePerson(userDetail.getName());
-        bisDetail.setChargePersonId(  SecurityUtils.getUsername());
+        SysUser usreInfo = wxSystemApi.findUsreInfo(SecurityUtils.getUsername());
+        bisDetail.setChargePerson(usreInfo.getNickName());
+        bisDetail.setChargePersonId(SecurityUtils.getUsername());
         this.updateById(bisList);
         bisDetailService.updateById(bisDetail);
         return Result.ok("认领成功");
@@ -206,14 +226,7 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
         this.updateById(bisList);
         bisDetailService.updateById(bisDetail);
 
-
-        //推送消息
-        List<UsersDto> userList = userMapper.findUserList("");
-        List<String> useridlist = userList.stream().map(e -> e.getUserid()).collect(Collectors.toList());
-        String s = MyStringUtils.buildTouser(useridlist);
-
-        UserDetail userDetail = userDetailService.findByUserId(SecurityUtils.getUsername());
-        send("您有一条BIS已被完成",s,"提出人",userDetail.getName(),id);
+        send("您有一条BIS已被完成", bisList.getSubmitterId(), "提出人", bisList.getSubmitter(), id);
         return Result.ok("完成成功");
     }
 
@@ -244,18 +257,20 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
     @Override
     public Result<?> assginBis(String id,CreatePersonList user) {
         BisList bisList = this.getById(id);
-        if(!(StatusEnum.UNPROCESSED.getCode().equals(bisList.getState()))){
-            return Result.error(200,"指派失败，状态已变更");
+        if (!(StatusEnum.UNPROCESSED.getCode().equals(bisList.getState()))) {
+            return Result.error(200, "指派失败，状态已变更");
         }
         QueryWrapper<BisDetail> wrapper = new QueryWrapper<>();
-        wrapper.eq("pid",id);
+        wrapper.eq("pid", id);
         BisDetail bisDetail = bisDetailService.getOne(wrapper);
         bisList.setState(StatusEnum.ASSIGNED.getCode());
         bisDetail.setChargePersonId(user.getUserId());
         bisDetail.setChargePerson(user.getName());
-        UserDetail userDetail = userDetailService.findByUserId(SecurityUtils.getUsername());
-        bisDetail.setDesignator(userDetail.getName());
-        bisDetail.setDesignatorId(  SecurityUtils.getUsername());
+
+        SysUser usreInfo = wxSystemApi.findUsreInfo(SecurityUtils.getUsername());
+
+        bisDetail.setDesignator(usreInfo.getNickName());
+        bisDetail.setDesignatorId(SecurityUtils.getUsername());
         bisDetail.setAssignedTime(LocalDateTime.now());
 
         this.updateById(bisList);
@@ -299,12 +314,12 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
     }
 
     private BisList buildBisList(String id,BisListAddDto bisListAddDto) {
-        UserDetail userDetail = userDetailService.findByUserId(SecurityUtils.getUsername());
+        SysUser usreInfo = wxSystemApi.findUsreInfo(SecurityUtils.getUsername());
        return BisList.builder()
                .id(id)
                .state(StatusEnum.UNPROCESSED.getCode())
                .title(bisListAddDto.getTitle())
-               .submitter(userDetail.getName())
+               .submitter(usreInfo.getNickName())
                .submitterId(  SecurityUtils.getUsername())
                .createTime(LocalDateTime.now())
                .view(1)
@@ -316,8 +331,9 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
 
     }
 
-    private BisDetail buildBisDetail(String id,BisListAddDto bisListAddDto) {
+    private BisDetail buildBisDetail(String id,String detailid,BisListAddDto bisListAddDto) {
         return BisDetail.builder()
+                .id(detailid)
                 .pid(id)
                 .title(bisListAddDto.getTitle())
                 .describeInfo(bisListAddDto.getDescribeInfo())
@@ -326,21 +342,33 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
                 .intention(bisListAddDto.getIntention())
                 .intentionId(bisListAddDto.getIntentionId())
                 .remarks(bisListAddDto.getRemarks())
-                .pictureids(bisListAddDto.getPictureids())
                 .build();
     }
 
-    private WxWorkRe send(String title,String touser,String key,String value,String id){
+    private List<BisListFile> buildFileList(String url,String id){
+        ArrayList<BisListFile> bisListFiles = new ArrayList<>();
+        String[] split = url.split(",");
+        for (String s : split) {
+            BisListFile bisListFile = new BisListFile();
+            bisListFile.setId(UUID.randomUUID().toString().replace("-",""));
+            bisListFile.setDetailId(id);
+            bisListFile.setUrl(s);
+            bisListFiles.add(bisListFile);
+        }
+        return bisListFiles;
+    }
+
+    private Boolean send(String title, String touser, String key, String value, String id) {
         AppletsInfo appletsInfo = new AppletsInfo();
         MiniprogramNotice miniprogramNotice = new MiniprogramNotice();
         ContentItem contentItem = new ContentItem();
         contentItem.setKey(key);
         contentItem.setValue(value);
         ArrayList<ContentItem> contentItems = new ArrayList<>();
-        miniprogramNotice.setAppId(appid);
+        miniprogramNotice.setAppId(appId);
         miniprogramNotice.setTitle(title);
         miniprogramNotice.setContentItem(contentItems);
-        miniprogramNotice.setPage("/pages/list/detail?id="+id);
+        miniprogramNotice.setPage("/pages/list/detail?id=" + id);
         appletsInfo.setMiniprogramNotice(miniprogramNotice);
         appletsInfo.setMsgtype("miniprogram_notice");
         appletsInfo.setTouser(touser);

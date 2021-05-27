@@ -4,8 +4,10 @@ import com.aoyang.wx.work.domain.AccessToken;
 import com.aoyang.wx.work.domain.MinAppUserId;
 import com.aoyang.wx.work.domain.WxUser;
 import com.aoyang.wx.work.domain.WxUserId;
+import com.ruoyi.system.api.domain.SysUser;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 

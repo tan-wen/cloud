@@ -1,16 +1,16 @@
 package com.aoyang.bis.service.impl;
 
 import com.aoyang.bis.common.Result;
+import com.aoyang.bis.common.wxapi.WxSystemApi;
 import com.aoyang.bis.domain.BisReport;
-import com.aoyang.bis.domain.UserDetail;
-import com.aoyang.bis.dto.CurrentUserInfo;
 import com.aoyang.bis.mapper.BisReportMapper;
 import com.aoyang.bis.service.BisReportService;
-import com.aoyang.bis.service.UserDetailService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.utils.SecurityUtils;
+import com.ruoyi.system.api.domain.SysUser;
+import com.ruoyi.system.api.model.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +32,8 @@ public class BisReportServiceImpl extends ServiceImpl<BisReportMapper, BisReport
     @Autowired
     private BisReportMapper bisReportMapper;
     @Autowired
-    private UserDetailService userDetailService;
+    private WxSystemApi wxSystemApi;
+
 
     @Override
     public Result<?> findByPid(String id) {
@@ -46,8 +47,9 @@ public class BisReportServiceImpl extends ServiceImpl<BisReportMapper, BisReport
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Result<?> addinfo(BisReport bisReport) {
-        UserDetail userDetail = userDetailService.findByUserId(SecurityUtils.getUsername());
-        bisReport.setName(userDetail.getName());
+
+        SysUser usreInfo = wxSystemApi.findUsreInfo(SecurityUtils.getUsername());
+        bisReport.setName(usreInfo.getNickName());
         bisReport.setCommenterId( SecurityUtils.getUsername());
         bisReport.setCreateTime(LocalDateTime.now());
         this.save(bisReport);

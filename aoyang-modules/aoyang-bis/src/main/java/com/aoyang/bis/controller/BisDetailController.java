@@ -2,10 +2,8 @@ package com.aoyang.bis.controller;
 
 import com.aoyang.bis.common.Result;
 import com.aoyang.bis.service.BisDetailService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.aoyang.bis.service.BisListFileService;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -21,13 +19,21 @@ public class BisDetailController {
 
     private final BisDetailService bisDetailService;
 
-    public BisDetailController(BisDetailService bisDetailService) {
+    private final BisListFileService bisListFileService;
+
+    public BisDetailController(BisDetailService bisDetailService, BisListFileService bisListFileService) {
         this.bisDetailService = bisDetailService;
+        this.bisListFileService = bisListFileService;
     }
 
     @GetMapping("/finddetail")
     private Result<?> findDetail(@RequestParam String pid){
        return bisDetailService.findByPid(pid);
+    }
+
+    @GetMapping("/{id}")
+    public Result<?> findFiles(@PathVariable String id){
+       return bisListFileService.findByDetailId(id);
     }
 
 }

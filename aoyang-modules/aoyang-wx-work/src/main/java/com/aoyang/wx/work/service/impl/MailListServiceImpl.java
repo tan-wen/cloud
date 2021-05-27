@@ -9,7 +9,6 @@ import com.aoyang.wx.work.service.remote.WxWorkTagService;
 import com.ruoyi.common.core.exception.BaseException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
 
 /**

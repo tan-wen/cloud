@@ -1,7 +1,7 @@
 package com.aoyang.bis.mapper;
 
 
-import com.aoyang.bis.domain.UserDetail;
+import com.aoyang.bis.domain.BisListFile;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -10,8 +10,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author GC
- * @since 2021-04-28
+ * @since 2021-05-27
  */
-public interface UserDetailMapper extends BaseMapper<UserDetail> {
+public interface BisListFileMapper extends BaseMapper<BisListFile> {
 
 }

@@ -23,9 +23,10 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping()
     public Result<?> findAll(@RequestParam(required = false) String name){
         return userService.findUsers(name);
     }
+
 
 }

@@ -260,4 +260,13 @@ public class SysUserController extends BaseController
         return userService.selectUserByUserName(userName);
     }
 
+    /**
+     * 获取当前用户信息
+     */
+    @GetMapping("/userinfo/{username}")
+    public SysUser findInfo(@PathVariable("username") String username)
+    {
+        return userService.selectUserByUserName(username);
+    }
+
 }

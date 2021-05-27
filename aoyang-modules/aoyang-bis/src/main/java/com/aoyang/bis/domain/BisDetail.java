@@ -110,10 +110,6 @@ public class BisDetail implements Serializable {
      */
     private String remarks;
 
-    /**
-     * 图片id逗号分隔
-     */
-    private String pictureids;
 
 
 }
