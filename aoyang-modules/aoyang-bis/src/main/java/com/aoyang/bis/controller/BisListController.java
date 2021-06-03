@@ -75,7 +75,7 @@ public class BisListController {
                               @RequestParam(required = false) LocalDateTime createTime,
                               @RequestParam(required = false) String classification,
                               @RequestParam(required = false) String secondaryClassification) throws ParseException {
-        return bisListService.findAll(StatusEnum.UNPROCESSED.getCode(), submitterId, createTime, classification, secondaryClassification);
+        return bisListService.findAll(StatusEnum.UNPROCESSED.getCode(), createTime, classification, secondaryClassification);
     }
 
 

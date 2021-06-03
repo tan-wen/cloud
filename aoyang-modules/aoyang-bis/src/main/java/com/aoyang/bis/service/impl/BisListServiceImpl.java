@@ -28,6 +28,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,6 +48,7 @@ import java.util.stream.Collectors;
  * @since 2021-05-04
  */
 @Service
+@RefreshScope
 public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> implements BisListService {
 
     @Autowired
@@ -67,11 +69,25 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
     private String appId;
     @Value("${tagId}")
     private String tagId;
+    @Value("${conId}")
+    private String conId;
 
 
     @Override
     public Result<?> findAll(String state, String submitterId, LocalDateTime createTime, String classification, String secondaryClassification) throws ParseException {
         return Result.ok(this.getAllinfo(state, submitterId, createTime, classification, secondaryClassification));
+    }
+
+    @Override
+    public Result<?> findAll(String state, LocalDateTime createTime, String classification, String secondaryClassification) throws ParseException {
+        String username = SecurityUtils.getUsername();
+
+
+        if(conId.contains(username)){
+            return Result.ok(this.getAllinfo(state, username, createTime, classification, secondaryClassification));
+        }else {
+            return Result.ok();
+        }
     }
 
     @Override

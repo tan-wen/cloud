@@ -23,4 +23,5 @@ spring:
         # 共享配置
         shared-configs:
           - application.${spring.cloud.nacos.config.file-extension}
+        refresh-enabled: true
 

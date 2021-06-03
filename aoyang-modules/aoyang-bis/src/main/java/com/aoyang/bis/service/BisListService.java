@@ -22,6 +22,8 @@ public interface BisListService extends IService<BisList> {
 
     Result<?> findAll(String state, String submitterId, LocalDateTime createTime,String classification,String secondaryClassification) throws ParseException;
 
+    Result<?> findAll(String state, LocalDateTime createTime,String classification,String secondaryClassification) throws ParseException;
+
     Result<?> findCreateList(String name);
 
     Result<?> updateInfo(String id);
