@@ -21,7 +21,7 @@ public class MiniprogramNotice {
     private String title;
     private String description;
     @JsonProperty(value = "emphasis_first_item")
-    private String emphasisFirstItem;
+    private Boolean emphasisFirstItem;
     @JsonProperty(value = "content_item")
     private List<ContentItem> contentItem;
 

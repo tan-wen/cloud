@@ -32,11 +32,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -70,7 +69,6 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
     private String tagId;
 
 
-
     @Override
     public Result<?> findAll(String state, String submitterId, LocalDateTime createTime, String classification, String secondaryClassification) throws ParseException {
         return Result.ok(this.getAllinfo(state, submitterId, createTime, classification, secondaryClassification));
@@ -95,31 +93,34 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
     @Transactional(rollbackFor = Exception.class)
     public Result<?> supportOrNot(String id, String type) {
         BisList bisList = this.getById(id);
-
-
+        SysUser usreInfo = wxSystemApi.findUsreInfo(SecurityUtils.getUsername());
         if (SupportEnum.SUPPORT.getCode().equals(type)) {
             QueryWrapper<UserOperation> userOperationQueryWrapper = new QueryWrapper<>();
             userOperationQueryWrapper.eq("pid",id);
             userOperationQueryWrapper.eq("user_id", SecurityUtils.getUsername());
-            userOperationQueryWrapper.eq("type", "support");
             UserOperation one = userOperationService.getOne(userOperationQueryWrapper);
             if (null != one) {
-                return Result.error(200, "已经点赞过");
+                return Result.error(200, "您已经点过赞或者踩过了哟");
             }
             bisList.setSupport(bisList.getSupport() + 1);
             userOperationService.addInfo(id,"support",   SecurityUtils.getUsername());
+            HashMap<String, String> map = new HashMap<>();
+            map.put("点赞人",usreInfo.getNickName());
+            send("您的BIS收到了一次点赞",bisList.getTitle(),bisList.getSubmitterId(),map,"/pages/list/detail?id=" + id);
         }
         if (SupportEnum.UNSUPPORT.getCode().equals(type)) {
             QueryWrapper<UserOperation> userOperationQueryWrapper = new QueryWrapper<>();
             userOperationQueryWrapper.eq("pid",id);
             userOperationQueryWrapper.eq("user_id",   SecurityUtils.getUsername());
-            userOperationQueryWrapper.eq("type", "unsupported");
             UserOperation one = userOperationService.getOne(userOperationQueryWrapper);
             if (null != one) {
-                return Result.error(200, "已经踩过");
+                return Result.error(200, "您已经点过赞或者踩过了哟");
             }
             bisList.setUnsupported(bisList.getUnsupported() + 1);
             userOperationService.addInfo(id,"unsupported",   SecurityUtils.getUsername());
+            HashMap<String, String> map = new HashMap<>();
+            map.put("踩你的人",usreInfo.getNickName());
+            send("您的BIS被人踩了一次",bisList.getTitle(),bisList.getSubmitterId(),map,"/pages/list/detail?id=" + id);
         }
         this.updateById(bisList);
         return Result.ok(bisList);
@@ -147,7 +148,10 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
         String s = targetStringUtil.buildTarget(useridlist);
 
         //推送消息
-        send("【" + bisList.getTitle() + "】", s, "提出人：", usreInfo.getNickName(), id);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("提出人",usreInfo.getNickName());
+        send("新的BIS通知",bisList.getTitle(),s,map,"/pages/list/detail?id=" + id);
+
         return Result.ok("添加成功");
 
     }
@@ -192,6 +196,12 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
         bisDetail.setChargePersonId(SecurityUtils.getUsername());
         this.updateById(bisList);
         bisDetailService.updateById(bisDetail);
+
+        //推送消息
+        HashMap<String, String> map = new HashMap<>();
+        map.put("认领人",usreInfo.getNickName());
+        send("BIS被认领通知",bisList.getTitle(),bisList.getSubmitterId(),map,"/pages/list/detail?id=" + id);
+
         return Result.ok("认领成功");
     }
 
@@ -225,8 +235,13 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
         bisDetail.setEndTime(LocalDateTime.now());
         this.updateById(bisList);
         bisDetailService.updateById(bisDetail);
+        SysUser usreInfo = wxSystemApi.findUsreInfo(SecurityUtils.getUsername());
 
-        send("您有一条BIS已被完成", bisList.getSubmitterId(), "提出人", bisList.getSubmitter(), id);
+        //推送消息
+        HashMap<String, String> map = new HashMap<>();
+        map.put("完成人",usreInfo.getNickName());
+        send("BIS完成通知",bisList.getTitle(),bisList.getSubmitterId(),map,"/pages/list/detail?id=" + id);
+
         return Result.ok("完成成功");
     }
 
@@ -250,6 +265,12 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
         }
         bisList.setState(StatusEnum.CANCELLED.getCode());
         this.updateById(bisList);
+
+        SysUser usreInfo = wxSystemApi.findUsreInfo(SecurityUtils.getUsername());
+        HashMap<String, String> map = new HashMap<>();
+        map.put("驳回人",usreInfo.getNickName());
+        send("BIS被驳回通知",bisList.getTitle(),bisList.getSubmitterId(),map,"/pages/mycommit/detail?id=" + id);
+
         return Result.ok("驳回成功");
 
     }
@@ -275,6 +296,11 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
 
         this.updateById(bisList);
         bisDetailService.updateById(bisDetail);
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("指派人",usreInfo.getNickName());
+        send("您被指派了一条BIS",bisList.getTitle(),user.getUserId(),map,"/pages/mycharge/detail?id=" + id);
+
         return Result.ok("指派成功");
 
     }
@@ -287,6 +313,16 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
         }
         bisList.setState(StatusEnum.ACCEPTED.getCode());
         this.updateById(bisList);
+
+        QueryWrapper<BisDetail> wrapper = new QueryWrapper<>();
+        wrapper.eq("pid", id);
+        BisDetail bisDetail = bisDetailService.getOne(wrapper);
+
+        SysUser usreInfo = wxSystemApi.findUsreInfo(SecurityUtils.getUsername());
+        HashMap<String, String> map = new HashMap<>();
+        map.put("接收人",usreInfo.getNickName());
+        send("指派被接受通知",bisList.getTitle(),bisDetail.getDesignatorId(),map,"/pages/list/detail?id=" + id);
+
         return Result.ok("接受成功");
     }
 
@@ -358,17 +394,29 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
         return bisListFiles;
     }
 
-    private Boolean send(String title, String touser, String key, String value, String id) {
+    private Boolean send(String title,String firstMsg, String touser, Map<String,String> info, String page) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String date = format.format(new Date());
+
         AppletsInfo appletsInfo = new AppletsInfo();
         MiniprogramNotice miniprogramNotice = new MiniprogramNotice();
-        ContentItem contentItem = new ContentItem();
-        contentItem.setKey(key);
-        contentItem.setValue(value);
         ArrayList<ContentItem> contentItems = new ArrayList<>();
+        ContentItem contentItem = new ContentItem();
+        contentItem.setKey("标题");
+        contentItem.setValue(firstMsg);
+        contentItems.add(contentItem);
+        info.forEach((k,v)->{
+            ContentItem cont = new ContentItem();
+            cont.setKey(k);
+            cont.setValue(v);
+            contentItems.add(cont);
+        });
         miniprogramNotice.setAppId(appId);
         miniprogramNotice.setTitle(title);
+        miniprogramNotice.setDescription(date);
+        miniprogramNotice.setEmphasisFirstItem(true);
         miniprogramNotice.setContentItem(contentItems);
-        miniprogramNotice.setPage("/pages/list/detail?id=" + id);
+        miniprogramNotice.setPage(page);
         appletsInfo.setMiniprogramNotice(miniprogramNotice);
         appletsInfo.setMsgtype("miniprogram_notice");
         appletsInfo.setTouser(touser);

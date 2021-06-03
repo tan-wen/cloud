@@ -3,6 +3,7 @@ package com.aoyang.bis.controller;
 import com.aoyang.bis.common.Result;
 import com.aoyang.bis.service.BisDetailService;
 import com.aoyang.bis.service.BisListFileService;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.web.bind.annotation.*;
 
 /**
