@@ -103,7 +103,7 @@ public class BisReportServiceImpl extends ServiceImpl<BisReportMapper, BisReport
         miniprogramNotice.setAppId(appId);
         miniprogramNotice.setTitle(title);
         miniprogramNotice.setDescription(date);
-        miniprogramNotice.setEmphasisFirstItem(true);
+        //miniprogramNotice.setEmphasisFirstItem(true);
         miniprogramNotice.setContentItem(contentItems);
         miniprogramNotice.setPage(page);
         appletsInfo.setMiniprogramNotice(miniprogramNotice);

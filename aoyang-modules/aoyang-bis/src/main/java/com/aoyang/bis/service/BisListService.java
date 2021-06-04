@@ -47,4 +47,6 @@ public interface BisListService extends IService<BisList> {
     Result<?> assginBis(String id, CreatePersonList pseron);
 
     Result<?> acceptBis(String id);
+
+    Result<?> transBis(String id, CreatePersonList pseron);
 }

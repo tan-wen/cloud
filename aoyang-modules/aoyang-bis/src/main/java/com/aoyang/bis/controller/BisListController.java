@@ -172,5 +172,13 @@ public class BisListController {
         return bisListService.acceptBis(id);
     }
 
+    /**
+     * 转派Bis
+     */
+    @PutMapping("/trans/{id}")
+    public Result<?> transBis(@PathVariable String id, @RequestBody CreatePersonList pseron){
+        return bisListService.transBis(id,pseron);
+    }
+
 }
 

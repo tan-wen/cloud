@@ -342,6 +342,37 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
         return Result.ok("接受成功");
     }
 
+    @Override
+    public Result<?> transBis(String id, CreatePersonList user) {
+
+        BisList bisList = this.getById(id);
+        if (!(StatusEnum.ASSIGNED.getCode().equals(bisList.getState()))) {
+            return Result.error(200, "转派失败，状态已变更");
+        }
+        QueryWrapper<BisDetail> wrapper = new QueryWrapper<>();
+        wrapper.eq("pid", id);
+        BisDetail bisDetail = bisDetailService.getOne(wrapper);
+        bisList.setState(StatusEnum.ASSIGNED.getCode());
+        bisDetail.setChargePersonId(user.getUserId());
+        bisDetail.setChargePerson(user.getName());
+
+        SysUser usreInfo = wxSystemApi.findUsreInfo(SecurityUtils.getUsername());
+
+        bisDetail.setDesignator(usreInfo.getNickName());
+        bisDetail.setDesignatorId(SecurityUtils.getUsername());
+        bisDetail.setAssignedTime(LocalDateTime.now());
+
+        this.updateById(bisList);
+        bisDetailService.updateById(bisDetail);
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("转派人",usreInfo.getNickName());
+        send("您被转派了一条BIS",bisList.getTitle(),user.getUserId(),map,"/pages/mycharge/detail?id=" + id);
+
+        return Result.ok("转派成功");
+
+    }
+
     private  List<BisList> getAllinfo(String state, String submitterId, LocalDateTime createTime, String classification, String secondaryClassification) throws ParseException {
         QueryWrapper<BisList> wrapper = new QueryWrapper<>();
         if (StringUtils.isNotEmpty(state)) {
@@ -430,7 +461,7 @@ public class BisListServiceImpl extends ServiceImpl<BisListMapper, BisList> impl
         miniprogramNotice.setAppId(appId);
         miniprogramNotice.setTitle(title);
         miniprogramNotice.setDescription(date);
-        miniprogramNotice.setEmphasisFirstItem(true);
+        //miniprogramNotice.setEmphasisFirstItem(true);
         miniprogramNotice.setContentItem(contentItems);
         miniprogramNotice.setPage(page);
         appletsInfo.setMiniprogramNotice(miniprogramNotice);
