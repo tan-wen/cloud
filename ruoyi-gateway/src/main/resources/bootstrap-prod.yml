@@ -3,11 +3,11 @@ spring:
   cloud:
     nacos:
       discovery:
-        namespace: 9eb76324-9bf0-4658-8da8-4f7959c2f5f2
+        server-addr: 192.168.168.21:8848
       config:
-        namespace: 9eb76324-9bf0-4658-8da8-4f7959c2f5f2
+        server-addr: 192.168.168.21:8848
     sentinel:
       datasource:
         ds1:
           nacos:
-            namespace: 9eb76324-9bf0-4658-8da8-4f7959c2f5f2
+            server-addr: 192.168.168.21:8848
